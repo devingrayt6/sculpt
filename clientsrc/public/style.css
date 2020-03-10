@@ -1,0 +1,43 @@
+.bench{
+  background-image: url(./bench.jpg);
+}
+
+.deadlift{
+  background-image: url(./deadlift.jpg);
+}
+
+.dumbbell{
+  background-image: url(./dumbbell.png);
+  min-height: 200px;
+  min-width: 200px;
+}
+
+.logo{
+  background-image: url(./logo.png);
+  background-position: center;
+  background-size: cover;
+  border-radius: 50%;
+  width: 75px;
+  height: 75px;
+}
+
+.pullup{
+  background-image: url(./pull\ up.jpg);
+}
+
+.pushup{
+  background-image: url(./pushup.jpg);
+}
+
+.run{
+  background-image: url(./run.jpg);
+}
+
+.situp{
+  background-image: url(./Sit-Up.jpg);
+}
+
+.squat{
+  background-image: url(./squat.jpg);
+}
+
