@@ -8,7 +8,8 @@ class DbContext {
   Values = mongoose.model("Value", ValueSchema);
   Profile = mongoose.model("Profile", ProfileSchema);
   Workout = mongoose.model("Workout", WorkoutSchema);
-  Exercises = mongoose.model("Exercises", ExerciseSchema)
+  Exercises = mongoose.model("Exercises", ExerciseSchema);
+  Schedule = mongoose.model("Schedule", ScheduleSchema)
 }
 
 export const dbContext = new DbContext();

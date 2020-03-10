@@ -12,8 +12,8 @@ export class WorkoutsController extends BaseController {
   constructor() {
     super("api/workouts")
     this.router = express.Router()
-      .use(auth0provider.getAuthorizedUserInfo)
-      .get('', this.getAll)
+    .use(auth0provider.getAuthorizedUserInfo)
+    .get('', this.getAll)
       .get('/:id', this.getById)
       .get('/:id/exercises', this.getExercisesByWorkoutId)
       .post('', this.create)
