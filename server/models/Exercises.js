@@ -24,4 +24,4 @@ const Exercise = new Schema(
     justOne: true
   })
 
-export default Workout;
+export default Exercise;
