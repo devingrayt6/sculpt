@@ -1,8 +1,7 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <router-link class="navbar-brand" :to="{ name: 'Home' }"
-      >AppName</router-link
-    >
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="logo"></a>
+    <router-link class="navbar-brand h2 pl-2" :to="{ name: 'Home' }">SCULPT</router-link>
     <button
       class="navbar-toggler"
       type="button"
@@ -15,32 +14,45 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item" :class="{ active: $route.name == 'Home' }">
-          <router-link :to="{ name: 'Home' }" class="nav-link"
-            >Home</router-link
-          >
-        </li>
+      <ul class="navbar-nav mr-auto float-right text-right">
         <li
           class="nav-item"
           v-if="$auth.isAuthenticated"
           :class="{ active: $route.name == 'Profile' }"
         >
-          <router-link class="nav-link" :to="{ name: 'Profile' }"
-            >Profile</router-link
-          >
+          <router-link class="nav-link" :to="{ name: 'Profile' }">Profile</router-link>
         </li>
-      </ul>
-      <span class="navbar-text">
-        <button
-          class="btn btn-success"
-          @click="login"
-          v-if="!$auth.isAuthenticated"
+        <li
+          class="nav-item"
+          v-if="$auth.isAuthenticated"
+          :class="{ active: $route.name == 'Dashboard' }"
         >
-          Login
-        </button>
-        <button class="btn btn-danger" @click="logout" v-else>logout</button>
-      </span>
+          <router-link class="nav-link" :to="{ name: 'Dashboard' }">Dashboard</router-link>
+        </li>
+        <li
+          class="nav-item"
+          v-if="$auth.isAuthenticated"
+          :class="{ active: $route.name == 'MyWorkouts' }"
+        >
+          <router-link class="nav-link" :to="{ name: 'MyWorkouts' }">My Workouts</router-link>
+        </li>
+        <li
+          class="nav-item"
+          v-if="$auth.isAuthenticated"
+          :class="{ active: $route.name == 'CurrentWorkout' }"
+        >
+          <router-link class="nav-link" :to="{ name: 'CurrentWorkout' }">Current Workout</router-link>
+        </li>
+        <li
+          class="nav-item"
+          v-if="$auth.isAuthenticated"
+          :class="{ active: $route.name == 'Stats' }"
+        >
+          <router-link class="nav-link" :to="{ name: 'Stats' }">Stats</router-link>
+        </li>
+        <li class="nav-item text-white" @click="login" v-if="!$auth.isAuthenticated">Login</li>
+        <li class="nav-item text-white" @click="logout" v-else>Logout</li>
+      </ul>
     </div>
   </nav>
 </template>
@@ -60,10 +72,14 @@ export default {
     },
     async logout() {
       this.$store.dispatch("resetBearer");
-      await this.$auth.logout({returnTo: window.location.origin});
+      await this.$auth.logout({ returnTo: window.location.origin });
     }
   }
 };
 </script>
 
-<style></style>
+<style scoped>
+li {
+  cursor: pointer;
+}
+</style>
