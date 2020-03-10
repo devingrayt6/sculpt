@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 import ValueSchema from "../models/Value";
 import ProfileSchema from "../models/Profile";
-import WorkoutSchema from "../models/Workout"
+import WorkoutSchema from "../models/Workout";
+import ExerciseSchema from "../models/Exercises"
 
 class DbContext {
   Values = mongoose.model("Value", ValueSchema);
