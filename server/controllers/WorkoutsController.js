@@ -1,5 +1,6 @@
 import express from 'express'
 import BaseController from "../utils/BaseController";
+// @ts-ignore
 import auth0provider from "@bcwdev/auth0provider";
 import { workoutsService } from '../services/WorkoutsService'
 import { exercisesService } from "../services/ExercisesService";

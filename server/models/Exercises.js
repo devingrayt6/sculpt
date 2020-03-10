@@ -4,19 +4,19 @@ const ObjId = mongoose.Schema.Types.ObjectId
 
 const Exercise = new Schema(
   {
-    title: [{ type: String }],
-    sets: {type: Number},
-    reps: {type: Number},
-    weight: {type: Number},
-    distance: {type: Number},
-    time: {type: String},
-    workoutId: { type: ObjId, ref: "Workout"},
+    title: { type: String },
+    sets: { type: Number },
+    reps: { type: Number },
+    weight: { type: Number },
+    distance: { type: Number },
+    time: { type: String },
+    workoutId: { type: ObjId, ref: "Workout" },
     creatorEmail: { type: String, required: true }
     // NOTE If you wish to add additional public properties for Workouts do so here
   },
   { timestamps: true, toJSON: { virtuals: true } })
 
-  Exercise.virtual("creator",
+Exercise.virtual("creator",
   {
     localField: "creatorEmail",
     ref: "Profile",
@@ -24,4 +24,4 @@ const Exercise = new Schema(
     justOne: true
   })
 
-export default Workout;
+export default Exercise;

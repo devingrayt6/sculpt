@@ -1,4 +1,3 @@
-
 import express from 'express'
 import BaseController from "../utils/BaseController";
 // @ts-ignore
