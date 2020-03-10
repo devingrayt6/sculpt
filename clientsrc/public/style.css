@@ -41,3 +41,9 @@
   background-image: url(./squat.jpg);
 }
 
+.background1{
+  background-image: url(./background1.jpg);
+  background-position: bottom;
+  background-size: cover;
+  height: 100vh;
+}
