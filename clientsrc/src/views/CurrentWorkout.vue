@@ -112,7 +112,16 @@
 <script>
 export default {
   name: "CurrentWorkout",
-  computed: {}
+  computed: {
+    workout() {
+      return this.$store.state.activeWorkout;
+    }
+  },
+  methods: {
+    completeWorkout() {
+      this.$store.dispatch("saveStats", workout);
+    }
+  }
 };
 </script>
 

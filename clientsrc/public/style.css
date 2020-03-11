@@ -1,9 +1,13 @@
 .bench{
   background-image: url(./bench.jpg);
+  background-position: left;
+  background-size: cover;
 }
 
 .deadlift{
   background-image: url(./deadlift.jpg);
+  background-position: bottom;
+  background-size: cover;
 }
 
 .dumbbell{
@@ -23,27 +27,44 @@
 
 .pullup{
   background-image: url(./pull\ up.jpg);
+  background-position: left;
+  background-size: cover;
 }
 
 .pushup{
   background-image: url(./pushup.jpg);
+  background-position: center;
+  background-size: cover;
 }
 
 .run{
   background-image: url(./run.jpg);
+  background-position: left;
+  background-size: cover;
 }
 
 .situp{
   background-image: url(./Sit-Up.jpg);
+  background-position: left;
+  background-size: cover;
 }
 
 .squat{
   background-image: url(./squat.jpg);
+  background-position: left;
+  background-size: cover;
 }
 
 .background1{
   background-image: url(./background1.jpg);
   background-position: bottom;
+  background-size: cover;
+  height: 100vh;
+}
+
+.background2{
+  background-image: url(./background2.jpg);
+  background-position: left;
   background-size: cover;
   height: 100vh;
 }

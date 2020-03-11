@@ -82,4 +82,7 @@ export default {
 li {
   cursor: pointer;
 }
+nav {
+  position: sticky;
+}
 </style>
