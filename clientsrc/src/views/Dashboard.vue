@@ -119,7 +119,7 @@ export default {
   width: 100%;
   height: 25rem;
   background-color: black;
-  color: white;
+  color: green;
 }
 .stats h3 {
   color: white;
