@@ -12,9 +12,9 @@ export class ProfilesController extends BaseController {
     this.router
       .use(auth0Provider.getAuthorizedUserInfo)
       .get("", this.getUserProfile)
-      .get("/:id/schedule/:scheduleId", this.getScheduleByUserId)
+      .get("/:id/schedule", this.getScheduleByUserId)
       .put("/:id", this.edit)
-      .put("/:id/schedule/:scheduleId", this.editScheduleByUserId)
+      .put("/:id/schedule", this.editScheduleByUserId)
   }
 
   async getUserProfile(req, res, next) {
@@ -28,13 +28,15 @@ export class ProfilesController extends BaseController {
   async getScheduleByUserId(req, res, next) {
     try {
       let schedule = await scheduleService.getScheduleByUserId(req.params.id)
+      res.send(schedule)
     } catch (error) {
       next(error)
     }
   }
   async editScheduleByUserId(req, res, next) {
     try {
-      let schedule = await scheduleService.editScheduleByUserId(req.params.id)
+      let schedule = await scheduleService.editScheduleByUserId(req.params.id, req.userInfo.email, req.body)
+      res.send(schedule)
     } catch (error) {
       next(error)
     }

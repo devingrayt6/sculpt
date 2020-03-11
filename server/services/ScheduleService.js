@@ -4,9 +4,9 @@ import { BadRequest } from "../utils/Errors"
 
 
 class ScheduleService {
-  async editScheduleByUserId(userId) {
-    let data = await dbContext.Schedule.findOneAndUpdate({ _id: userId})
-    throw new Error("Method not implemented.")
+  async editScheduleByUserId(userId, userEmail, update) {
+    let data = await dbContext.Schedule.findOneAndUpdate({ _id: userId, creatorEmail: userEmail}, update, {new:true})
+    return data
   }
   async getScheduleByUserId(userId) {
     let data = await dbContext.Schedule.find({ _id: userId })
