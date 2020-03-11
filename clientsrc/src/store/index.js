@@ -18,7 +18,10 @@ let api = Axios.create({
 export default new Vuex.Store({
   state: {
     profile: {},
-
+    activeWorkout: {},
+    workouts: [],
+    exercises: [],
+    stats: []
   },
   mutations: {
     setProfile(state, profile) {
