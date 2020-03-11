@@ -17,7 +17,8 @@ let api = Axios.create({
 
 export default new Vuex.Store({
   state: {
-    profile: {}
+    profile: {},
+
   },
   mutations: {
     setProfile(state, profile) {
@@ -25,7 +26,7 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    setBearer({}, bearer) {
+    setBearer({ }, bearer) {
       api.defaults.headers.authorization = bearer;
     },
     resetBearer() {
