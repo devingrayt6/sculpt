@@ -6,7 +6,7 @@
           class="btn btn-link"
           type="button"
           data-toggle="collapse"
-          data-target="#collapseOne"
+          data-target="#exercise+ID"
           aria-expanded="true"
           aria-controls="collapseOne"
         >Exercise title</button>
@@ -14,19 +14,15 @@
     </div>
 
     <div
-      id="collapseOne"
+      id="exercise+ID"
       class="collapse show"
       aria-labelledby="headingOne"
-      data-parent="#accordionExample"
+      data-parent="#currentWorkout"
     >
       <div class="card-body">
         <div class="form-group form-check">
-          <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-          <label class="form-check-label" for="exampleCheck1">Check me out</label>
-        </div>
-        <div class="form-group form-check">
-          <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-          <label class="form-check-label" for="exampleCheck1">Check me out</label>
+          <input type="checkbox" class="form-check-input" id="Type" />
+          <label class="form-check-label" for="Type">Sets: 3, Weight: 50lb, Reps: 5</label>
         </div>
       </div>
     </div>

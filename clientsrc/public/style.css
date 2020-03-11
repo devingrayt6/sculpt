@@ -1,11 +1,11 @@
-.bench{
-  background-image: url(./bench.jpg);
+.shoulders{
+  background-image: url(./shoulder.jpg);
   background-position: left;
   background-size: cover;
 }
 
-.deadlift{
-  background-image: url(./deadlift.jpg);
+.arms{
+  background-image: url(./arms.jpg);
   background-position: bottom;
   background-size: cover;
 }
@@ -25,31 +25,31 @@
   height: 75px;
 }
 
-.pullup{
+.back{
   background-image: url(./pull\ up.jpg);
   background-position: left;
   background-size: cover;
 }
 
-.pushup{
+.chest{
   background-image: url(./pushup.jpg);
   background-position: center;
   background-size: cover;
 }
 
-.run{
+.cardio{
   background-image: url(./run.jpg);
   background-position: left;
   background-size: cover;
 }
 
-.situp{
+.core{
   background-image: url(./Sit-Up.jpg);
   background-position: left;
   background-size: cover;
 }
 
-.squat{
+.legs{
   background-image: url(./squat.jpg);
   background-position: left;
   background-size: cover;

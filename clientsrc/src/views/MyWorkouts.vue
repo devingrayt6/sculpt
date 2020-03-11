@@ -8,37 +8,37 @@
         <!-- <workouts/> -->
 
         <div class="snap-child">
-          <div class="workout deadlift text-center">
+          <div class="workout arms text-center">
             <h2 class="title">Workout Title</h2>
           </div>
         </div>
         <div class="snap-child">
-          <div class="workout bench text-center">
+          <div class="workout shoulders text-center">
             <h2 class="title">Workout TItle</h2>
           </div>
         </div>
         <div class="snap-child">
-          <div class="workout pullup text-center">
+          <div class="workout back text-center">
             <h2 class="title">Workout TItle</h2>
           </div>
         </div>
         <div class="snap-child">
-          <div class="workout pushup text-center">
+          <div class="workout chest text-center">
             <h2 class="title">Workout TItle</h2>
           </div>
         </div>
         <div class="snap-child">
-          <div class="workout squat text-center">
+          <div class="workout legs text-center">
             <h2 class="title">Workout TItle</h2>
           </div>
         </div>
         <div class="snap-child">
-          <div class="workout situp text-center">
+          <div class="workout core text-center">
             <h2 class="title">Workout TItle</h2>
           </div>
         </div>
         <div class="snap-child">
-          <div class="workout run text-center">
+          <div class="workout cardio text-center">
             <h2 class="title">Workout TItle</h2>
           </div>
         </div>
@@ -50,7 +50,7 @@
       </div>
     </div>
     <div class="row newWorkoutForm" v-if="workoutForm">
-      <h2>Workout Form</h2>
+      <new-workout />
     </div>
     <div class="row activeWorkout">
       <h2>Active Workout</h2>
@@ -59,6 +59,8 @@
 </template>
 
 <script>
+import NewWorkout from "../components/NewWorkout";
+
 export default {
   name: "MyWorkouts",
   computed: {},
@@ -79,6 +81,9 @@ export default {
     addWorkout() {},
     deleteWorkout() {},
     editWorkout() {}
+  },
+  components: {
+    NewWorkout
   }
 };
 </script>
