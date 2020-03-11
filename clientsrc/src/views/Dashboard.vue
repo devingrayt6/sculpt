@@ -29,33 +29,32 @@
         <div class="text-center">
           <h3 class="mt-3">STATS:</h3>
         </div>
-
-        <ul>
-          <li id="bench">
+        <div class="row">
+          <div class="col-4 my-3" id="bench">
             Bench
-            <i class="fas fa-chart-line"></i>
-          </li>
-          <li id="squat">
+            lbs: 180
+          </div>
+          <div class="col-4 my-3" id="squat">
             Squat
-            <i class="fas fa-chart-line"></i>
-          </li>
-          <li id="dead-lift">
+            lbs: 250
+          </div>
+          <div class="col-4 my-3" id="dead-lift">
             Dead Lift
-            <i class="fas fa-chart-line"></i>
-          </li>
-          <li id="push-ups">
+            lbs: 280
+          </div>
+          <div class="col-4 my-3" id="push-ups">
             Push Ups
-            <i class="fas fa-chart-line"></i>
-          </li>
-          <li id="pull-ups">
+            max: 100
+          </div>
+          <div class="col-4 my-3" id="pull-ups">
             Pull Ups
-            <i class="fas fa-chart-line"></i>
-          </li>
-          <li id="sit-ups">
+            max: 20
+          </div>
+          <div class="col-4 my-3" id="sit-ups">
             Sit Ups
-            <i class="fas fa-chart-line"></i>
-          </li>
-        </ul>
+            max: 120
+          </div>
+        </div>
       </div>
     </div>
     <footer></footer>
@@ -116,14 +115,13 @@ export default {
   color: rgb(124, 121, 121);
 }
 .stats {
-  background-color: rgb(0, 0, 0);
   bottom: 0;
   width: 100%;
   height: 25rem;
-  color: white;
+  color: green;
 }
 .stats h3 {
-  color: rgb(255, 255, 255);
+  color: rgba(2, 2, 2, 0.329);
 }
 .stats ul {
   list-style-type: none;
