@@ -25,7 +25,7 @@
     </div>
 
     <div class="row">
-      <div class="stats offset-1 col-10 offset-1">
+      <div class="stats col-12">
         <div class="text-center">
           <h3 class="mt-3">STATS:</h3>
         </div>
@@ -118,10 +118,11 @@ export default {
   bottom: 0;
   width: 100%;
   height: 25rem;
-  color: green;
+  background-color: black;
+  color: white;
 }
 .stats h3 {
-  color: rgba(2, 2, 2, 0.329);
+  color: white;
 }
 .stats ul {
   list-style-type: none;
@@ -130,8 +131,5 @@ export default {
   font-size: 18px;
   margin-top: 0.75rem;
   margin-bottom: 0.75rem;
-}
-.stats ul i {
-  color: green;
 }
 </style>
