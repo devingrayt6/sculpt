@@ -3,6 +3,7 @@ import { BadRequest } from "../utils/Errors"
 
 
 class WorkoutsService {
+
   async getAll(userEmail) {
     return await dbContext.Workout.find({ creatorEmail: userEmail }).populate("creator", "name picture")
   }
@@ -35,6 +36,14 @@ class WorkoutsService {
     }
   }
 
+  async addExercise(id, body) {
+    return await dbContext.Workout.findOneAndUpdate({ _id: id }, { $addToSet: { exerciseData: body } }, { new: true })
+  }
+
+
+  async deleteExercise(id, exerciseId) {
+    return await dbContext.Workout.findOneAndUpdate({ _id: id }, { $pull: { exerciseData: { _id: exerciseId } } }, { new: true })
+  }
 }
 
 

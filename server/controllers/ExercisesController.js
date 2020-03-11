@@ -28,7 +28,6 @@ export class ExercisesController extends BaseController {
   }
 
 
-
   async getById(req, res, next) {
     try {
       let data = await exercisesService.getById(req.params.id, req.userInfo.email)
@@ -37,16 +36,14 @@ export class ExercisesController extends BaseController {
   }
 
 
-
   async create(req, res, next) {
     try {
       let data = await exercisesService.create(req.body)
+
       return res.status(201).send(data)
     } catch (error) { next(error) }
 
   }
-
-
 
   async edit(req, res, next) {
     try {
@@ -54,7 +51,6 @@ export class ExercisesController extends BaseController {
       return res.send(data)
     } catch (error) { next(error) }
   }
-
 
 
   async delete(req, res, next) {

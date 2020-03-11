@@ -12,13 +12,14 @@ export class WorkoutsController extends BaseController {
   constructor() {
     super("api/workouts")
     this.router = express.Router()
-    .use(auth0provider.getAuthorizedUserInfo)
-    .get('', this.getAll)
+      .use(auth0provider.getAuthorizedUserInfo)
+      .get('', this.getAll)
       .get('/:id', this.getById)
-      .get('/:id/exercises', this.getExercisesByWorkoutId)
       .post('', this.create)
+      .post('/:id/exerciseData', this.addExercise)
       .put('/:id', this.edit)
       .delete('/:id', this.delete)
+      .delete('/:id/exercise', this.deleteExercise)
   }
 
 
@@ -69,5 +70,23 @@ export class WorkoutsController extends BaseController {
       await workoutsService.delete(req.params.id, req.userInfo.email)
       return res.send("Successfully deleted")
     } catch (error) { next(error) }
+  }
+
+  async addExercise(req, res, next) {
+    try {
+      let exercise = await workoutsService.addExercise(req.params.id, req.body)
+      return res.send("workout updated")
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async deleteExercise(req, res, next) {
+    try {
+      let exercise = await workoutsService.deleteExercise(req.params.id, req.params.exerciseId)
+      return res.send("exercise deleted")
+    } catch (error) {
+      next(error)
+    }
   }
 }
