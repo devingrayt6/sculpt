@@ -21,12 +21,21 @@ export default new Vuex.Store({
     activeWorkout: {},
     workouts: [],
     exercises: [],
-    stats: []
+    stats: [],
+    wod: {},
   },
   mutations: {
     setProfile(state, profile) {
       state.profile = profile;
-    }
+    },
+    setStats(state, stats) {
+      state.stats = stats
+    },
+    setWod(state, day) {
+      // state.wod = state.profile.schedule[day]
+      console.log(state.profile[day])
+    },
+
   },
   actions: {
     setBearer({ }, bearer) {
@@ -42,6 +51,14 @@ export default new Vuex.Store({
       } catch (error) {
         console.error(error);
       }
-    }
+    },
+    async getStats({ commit }) {
+      try {
+        let res = await api.get("stats");
+        commit('setStats', res.data)
+      } catch (error) {
+        console.error(error);
+      }
+    },
   }
 });

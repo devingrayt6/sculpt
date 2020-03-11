@@ -15,13 +15,21 @@
     </div>
 
     <div class="calendar" id="calendar">
-      <p>Sun</p>
-      <p>Mon</p>
-      <p>Tue</p>
-      <p>Wed</p>
-      <p>Thu</p>
-      <p>Fri</p>
-      <p>Sat</p>
+      <p @click="setWod('Sunday')">Sun</p>
+      <p @click="setWod('Monday')">Mon</p>
+      <p @click="setWod('Tuesday')">Tue</p>
+      <p @click="setWod('Wednesday')">Wed</p>
+      <p @click="setWod('Thursday')">Thu</p>
+      <p @click="setWod('Friday')">Fri</p>
+      <p @click="setWod('Saturday')">Sat</p>
+    </div>
+
+    <div v-if="toggleWorkouts">
+      <li href="#">Bench</li>
+      <li href="#">Bench</li>
+      <li href="#">Bench</li>
+      <li href="#">Bench</li>
+      <li href="#">Bench</li>
     </div>
 
     <div class="row">
@@ -73,9 +81,34 @@ let weekDays = {
 };
 export default {
   name: "Dashboard",
-  mounted: {},
-  computed: {},
-  methods: {},
+  mounted: {
+    getWod() {
+      this.$store.dispatch("getWod");
+    },
+    getStats() {
+      this.$store.dispatch("getStats");
+    },
+    getSchedule() {
+      this.$store.state.profile.schedule;
+    }
+  },
+  computed: {
+    drawWod() {
+      return this.$store.state.wod;
+    },
+    drawStats() {
+      return this.$store.state.stats;
+    }
+  },
+  methods: {
+    setWod(day) {
+      if (this.$store.state.profile[day]) {
+        this.$store.commit("setWod", day);
+      } else {
+        this.toggleWorkouts = !this.toggleWorkouts;
+      }
+    }
+  },
   data() {
     return {
       todaysDate: `${new Date()
@@ -85,7 +118,8 @@ export default {
         .split("/")
         .reverse()
         .join("/")}`,
-      dayOfWeek: `${weekDays[new Date().getDay()]}`
+      dayOfWeek: `${weekDays[new Date().getDay()]}`,
+      toggleWorkouts: false
     };
   }
 };
