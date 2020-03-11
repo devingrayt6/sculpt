@@ -3,7 +3,6 @@ import BaseController from "../utils/BaseController";
 import auth0Provider from "@bcwdev/auth0provider";
 import { profilesService } from "../services/ProfilesService";
 import { dbContext } from "../db/DbContext";
-import {scheduleService} from "../services/ScheduleService"
 
 export class ProfilesController extends BaseController {
 
