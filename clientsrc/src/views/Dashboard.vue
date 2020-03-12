@@ -25,7 +25,11 @@
     </div>
 
     <div v-if="toggleWorkouts">
-      <li v-for="workout in workouts" :key="workout._id">{{workout.title}}</li>
+      <li
+        @click="setDayWorkout(workout)"
+        v-for="workout in workouts"
+        :key="workout._id"
+      >{{workout.title}}</li>
     </div>
 
     <div class="row">
@@ -83,6 +87,7 @@ export default {
       this.$store.dispatch("getStats");
       this.$store.state.profile.schedule;
       this.$store.dispatch("getWorkouts");
+      this.$store.dispatch("setActiveWorkout");
     }
   },
   computed: {
@@ -98,11 +103,26 @@ export default {
   },
   methods: {
     setWod(day) {
-      if (this.$store.state.profile[day]) {
+      if (this.$store.state.profile.schedule[day]) {
         this.$store.commit("setWod", day);
       } else {
         this.toggleWorkouts = !this.toggleWorkouts;
       }
+      this.selectedDay = day;
+      console.log(this.selectedDay);
+    },
+    setDayWorkout(workout) {
+      let newSchedule = this.$store.state.profile.schedule;
+      newSchedule[this.selectedDay] = workout;
+      let data = {
+        schedule: newSchedule,
+        profileId: this.$store.state.profile.id
+      };
+      this.$store.dispatch("setDayWorkout", data);
+    },
+
+    setActiveWorkout(workout) {
+      this.$store.dispatch("setActiveWorkout", workout);
     }
   },
   data() {
@@ -115,7 +135,8 @@ export default {
         .reverse()
         .join("/")}`,
       dayOfWeek: `${weekDays[new Date().getDay()]}`,
-      toggleWorkouts: false
+      toggleWorkouts: false,
+      selectedDay: ""
     };
   }
 };

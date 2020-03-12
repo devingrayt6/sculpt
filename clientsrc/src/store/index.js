@@ -37,7 +37,14 @@ export default new Vuex.Store({
     },
     setWorkouts(state, workouts) {
       state.workouts = workouts
+    },
+    updateSchedule(state, schedule) {
+    },
+
+    setActiveWorkout(state, workout) {
+      state.activeWorkout = workout
     }
+
 
   },
   actions: {
@@ -70,6 +77,25 @@ export default new Vuex.Store({
         commit('setWorkouts', res.data)
       } catch (error) {
         console.error(error)
+      }
+    },
+
+    async setDayWorkout({ commit }, data) {
+      try {
+        let res = await api.put(`profile/${data.profileId}`, data.schedule)
+        commit('updateSchedule', res.data)
+      } catch (error) {
+        console.error(error);
+
+      }
+    },
+
+    async setActiveWorkout({ commit }, workout) {
+      try {
+        commit('setActiveWorkout', workout)
+      } catch (error) {
+        console.error(error);
+
       }
     }
   }
