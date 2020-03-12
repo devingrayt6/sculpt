@@ -21,7 +21,15 @@ const Profile = new Schema(
     name: { type: String, required: true },
     picture: { type: String },
     stats: {},
-    schedule: [Schedule]
+    schedule: {
+      "Sunday": {},
+      "Monday": {},
+      "Tuesday": {},
+      "Wednesday": {},
+      "Thursday": {},
+      "Friday": {},
+      "Saturday": {}
+    }
     // NOTE If you wish to add additional public properties for profiles do so here
   },
   { timestamps: true, toJSON: { virtuals: true } }
