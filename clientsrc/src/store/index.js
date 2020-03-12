@@ -50,6 +50,7 @@ export default new Vuex.Store({
       state.exercises = exercises
     }
   },
+
   actions: {
     setBearer({ }, bearer) {
       api.defaults.headers.authorization = bearer;
@@ -109,7 +110,7 @@ export default new Vuex.Store({
         commit('setExercises', res.data)
       } catch (error) {
         console.error(error);
-
       }
     }
-  });
+  }
+});
