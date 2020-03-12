@@ -111,6 +111,7 @@ export default {
       this.selectedDay = day;
       console.log(this.selectedDay);
     },
+
     setDayWorkout(workout) {
       let newSchedule = this.$store.state.profile.schedule;
       newSchedule[this.selectedDay] = workout;

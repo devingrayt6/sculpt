@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import Axios from "axios";
 import router from "../router";
+import { STATES } from "mongoose";
 
 Vue.use(Vuex);
 
@@ -43,10 +44,13 @@ export default new Vuex.Store({
 
     setActiveWorkout(state, workout) {
       state.activeWorkout = workout
+    },
+
+    setExercises(state, exercises) {
+      state.exercises = exercises
     }
-
-
   },
+
   actions: {
     setBearer({ }, bearer) {
       api.defaults.headers.authorization = bearer;
@@ -84,6 +88,7 @@ export default new Vuex.Store({
       try {
         let res = await api.put(`profile/${data.profileId}`, data.schedule)
         commit('updateSchedule', res.data)
+        console.log(res.data)
       } catch (error) {
         console.error(error);
 
@@ -96,6 +101,15 @@ export default new Vuex.Store({
       } catch (error) {
         console.error(error);
 
+      }
+    },
+
+    async getExercises({ commit }) {
+      try {
+        let res = await api.get('exercises')
+        commit('setExercises', res.data)
+      } catch (error) {
+        console.error(error);
       }
     }
   }
