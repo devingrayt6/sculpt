@@ -77,7 +77,9 @@ class ProfileService {
 ​    * @param {any} body Updates to apply to user object
 ​    */
   async updateProfile(user, body) {
+
     let update = sanitizeBody(body);
+    console.log(body);
     let profile = await dbContext.Profile.findOneAndUpdate(
       { email: user.email },
       { $set: update },
