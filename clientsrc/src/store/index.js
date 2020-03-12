@@ -35,6 +35,9 @@ export default new Vuex.Store({
       // state.wod = state.profile.schedule[day]
       console.log(state.profile[day])
     },
+    setWorkouts(state, workouts) {
+      state.workouts = workouts
+    }
 
   },
   actions: {
@@ -60,5 +63,14 @@ export default new Vuex.Store({
         console.error(error);
       }
     },
+
+    async getWorkouts({ commit }) {
+      try {
+        let res = await api.get("workouts")
+        commit('setWorkouts', res.data)
+      } catch (error) {
+        console.error(error)
+      }
+    }
   }
 });

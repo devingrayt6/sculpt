@@ -25,11 +25,7 @@
     </div>
 
     <div v-if="toggleWorkouts">
-      <li href="#">Bench</li>
-      <li href="#">Bench</li>
-      <li href="#">Bench</li>
-      <li href="#">Bench</li>
-      <li href="#">Bench</li>
+      <li v-for="workout in workouts" :key="workout._id">{{workout.title}}</li>
     </div>
 
     <div class="row">
@@ -81,15 +77,12 @@ let weekDays = {
 };
 export default {
   name: "Dashboard",
-  mounted: {
-    getWod() {
+  mounted() {
+    {
       this.$store.dispatch("getWod");
-    },
-    getStats() {
       this.$store.dispatch("getStats");
-    },
-    getSchedule() {
       this.$store.state.profile.schedule;
+      this.$store.dispatch("getWorkouts");
     }
   },
   computed: {
@@ -98,6 +91,9 @@ export default {
     },
     drawStats() {
       return this.$store.state.stats;
+    },
+    workouts() {
+      return this.$store.state.workouts;
     }
   },
   methods: {
