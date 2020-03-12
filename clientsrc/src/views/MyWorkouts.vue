@@ -49,7 +49,8 @@
         </div>
       </div>
     </div>
-    <div class="row newWorkoutForm" v-if="workoutForm">
+    <div class="row newWorkoutForm m-2 p-2" v-if="workoutForm">
+      <h4 class="text-white">Create New Workout</h4>
       <new-workout />
     </div>
     <div class="row activeWorkout">
@@ -128,5 +129,8 @@ export default {
 .title {
   color: rgb(29, 172, 255);
   text-shadow: 0 2px 0 white;
+}
+.newWorkoutForm {
+  background-color: rgba(0, 0, 0, 0.705);
 }
 </style>

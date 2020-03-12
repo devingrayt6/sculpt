@@ -1,39 +1,29 @@
 <template>
   <div>
-    <div class="col-8 newWorkout-form">
-      <form>
-        <div class="form-group row">
-          <label for="workout-name" class="col-sm-2 col-form-label">Workout Name</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" id="workout-name" />
-          </div>
+    <div class="col-12 newWorkout-form">
+      <form class="pl-2 newForm">
+        <div class="form-group row text-white">
+          <label for="exampleFormControlInput1">Workout Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="exampleFormControlInput1"
+            placeholder="Workout Name..."
+          />
         </div>
-        <div class="row">
-          <div class="dropdown">
-            <button
-              class="btn btn-secondary dropdown-toggle mx-3 mb-2"
-              type="button"
-              id="dropdownMenuButton"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >Type of Workout</button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item">Chest</a>
-              <a class="dropdown-item">Back</a>
-              <a class="dropdown-item">Legs</a>
-              <a class="dropdown-item">Core</a>
-              <a class="dropdown-item">Arms</a>
-              <a class="dropdown-item">Shoulders</a>
-              <a class="dropdown-item">Cardio</a>
-            </div>
-          </div>
+        <div class="form-group row text-white">
+          <label for="exampleFormControlSelect1">Type</label>
+          <select class="form-control" id="exampleFormControlSelect1">
+            <option>Chest</option>
+            <option>Back</option>
+            <option>Legs</option>
+            <option>Core</option>
+            <option>Arms</option>
+            <option>Shoulders</option>
+            <option>Cardio</option>
+          </select>
         </div>
-        <div class="form-group row">
-          <div class="col-sm-10">
-            <button type="submit" class="btn btn-primary">Save</button>
-          </div>
-        </div>
+        <button class="btn btn-sm btn-success float-right">Create</button>
       </form>
     </div>
     <div class="col-4 my-exercises"></div>
