@@ -93,7 +93,6 @@ export default new Vuex.Store({
     async setActiveWorkout({ commit }, workout) {
       try {
         commit('setActiveWorkout', workout)
-        localStorage.setItem('activeWorkout', workout)
       } catch (error) {
         console.error(error);
 

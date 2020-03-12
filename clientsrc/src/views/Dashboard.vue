@@ -87,10 +87,7 @@ export default {
       this.$store.dispatch("getStats");
       this.$store.state.profile.schedule;
       this.$store.dispatch("getWorkouts");
-      this.$store.dispatch(
-        "setActiveWorkout",
-        localStorage.getItem("activeWorkout")
-      );
+      this.$store.dispatch("setActiveWorkout");
     }
   },
   computed: {
