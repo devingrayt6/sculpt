@@ -1,20 +1,24 @@
 <template>
-  <div class="col-8 workout text-center">
-    <div class="row">
-      <h2 class="title">{{workoutData.title}}</h2>
+  <div class="col-12 text-center">
+    <div class="row text-center">
+      <h2 class="col-12 title text-center">{{this.workout.title}}</h2>
     </div>
     <div class="row">
-      <h4>Exercises:</h4>
+      <h4 class="col-12 title text-center">Exercises:</h4>
     </div>
-    <ul class="list-group list-group-flush m-2">
+    <ul class="list-group">
       <li
-        class="list-group-item listItem row"
+        class="list-group-item listItem row p-2 m-2"
         v-for="(exerciseObj) in exerciseData"
         :key="exerciseObj._id"
       >
-        <p @click="deleteExercise(exerciseObj)" class="deletebutton col-12 text-right text-danger">X</p>
-        <h5 class="col-12">{{exerciseObj.title}}</h5>
-        <p class="col-12" v-show="exerciseObj.title">Sets-{{exerciseObj.sets}}</p>
+        <div class="title-row col-12">
+          <h5>
+            <u>{{exerciseObj.title}}</u>
+          </h5>
+          <p @click="deleteExercise(exerciseObj)" class="deletebutton text-danger">X</p>
+        </div>
+        <p class="col-12" v-show="exerciseObj.sets">Sets-{{exerciseObj.sets}}</p>
         <p class="col-12" v-show="exerciseObj.reps">Reps-{{exerciseObj.reps}}</p>
         <p class="col-12" v-show="exerciseObj.weights">Weight-{{exerciseObj.weights}}</p>
         <p class="col-12" v-show="exerciseObj.distance">Distance-{{exerciseObj.distance}}</p>
@@ -22,7 +26,7 @@
       </li>
       <div v-if="newExerciseForm">
         <select class="custom-select" id="exerciseSelect" @change="addNewExercise($event)">
-          <option selected>Choose a Exercise</option>
+          <option selected>Add New Exercise</option>
           <option v-for="exercise in exercises" :key="exercise._id">{{exercise.title}}</option>
         </select>
       </div>
@@ -30,12 +34,12 @@
     <i
       v-if="!newExerciseForm"
       @click.prevent="newExerciseForm=true"
-      class="fas fa-dumbbell text-success float-right m-3"
+      class="fas fa-dumbbell text-success float-right m-3 h2"
     ></i>
     <i
       v-if="newExerciseForm"
       @click.prevent="newExerciseForm=false"
-      class="fas fa-dumbbell text-danger float-right m-3"
+      class="fas fa-dumbbell text-warning float-right m-3 h2"
     ></i>
   </div>
 </template>
@@ -51,23 +55,13 @@ export default {
       return this.$store.state.activeWorkout;
     },
     exerciseData() {
-      return this.workoutData.exerciseData;
+      return this.$store.state.activeWorkout.exerciseData;
     },
     exercises() {
       return this.$store.state.exercises;
     }
   },
-  mounted() {
-    if (!this.$store.state.workouts.length) {
-      this.$store.dispatch("getWorkoutById", this.$route.params.workoutId);
-    } else {
-      this.setActiveWorkout();
-    }
-  },
   methods: {
-    setActiveWorkout() {
-      this.$store.dispatch("setActiveWorkout", this.$route.params.workoutId);
-    },
     addExercise() {
       let workoutId = this.workoutData.id;
       let form = document.getElementById("exerciseSelect");
@@ -106,5 +100,13 @@ export default {
   position: relative;
   background-color: transparent;
   align-items: baseline;
+}
+.title-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.listItem {
+  border: 1px solid black;
 }
 </style>

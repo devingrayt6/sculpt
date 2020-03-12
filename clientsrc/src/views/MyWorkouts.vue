@@ -14,10 +14,13 @@
       </div>
     </div>
     <div class="row newWorkoutForm m-2 p-2" v-if="workoutForm">
-      <h4 class="text-white">Create New Workout</h4>
+      <h4 class="text-white col-12">
+        Create New Workout
+        <i class="fas fa-ban text-warning float-right" @click="workoutForm=false"></i>
+      </h4>
       <new-workout />
     </div>
-    <div class="row activeWorkout" v-if="activeWorkout">
+    <div class="row activeWorkout mt-4" v-if="!workoutForm">
       <workout-detail />
     </div>
   </div>
@@ -33,7 +36,6 @@ export default {
   data() {
     return {
       workoutForm: false,
-      activeWorkout: false,
       newWorkout: {}
     };
   },
