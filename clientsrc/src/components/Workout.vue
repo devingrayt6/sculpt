@@ -1,6 +1,6 @@
 <template>
   <div class="col-8 workout text-center" :id="workoutData.type">
-    <h2 @click="setActiveWorkout" class="title">{{workoutData.title}}</h2>
+    <h2 @click="setActiveWorkout" class="title text-white">{{workoutData.title}}</h2>
   </div>
 </template>
 
@@ -20,5 +20,8 @@ export default {
 .workout {
   height: 200px;
   width: 300px;
+}
+.title {
+  background-color: rgba(0, 0, 0, 0.575);
 }
 </style>

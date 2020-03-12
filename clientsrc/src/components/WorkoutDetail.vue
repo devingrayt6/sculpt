@@ -14,22 +14,17 @@
       >
         <p @click="deleteExercise(exerciseObj)" class="deletebutton col-12 text-right text-danger">X</p>
         <h5 class="col-12">{{exerciseObj.title}}</h5>
-        <p class="col-12" v-show="exerciseObj.sets>0">-{{exerciseObj.sets}}</p>
-        <p class="col-12" v-show="exerciseObj.reps>0">-{{exerciseObj.reps}}</p>
-        <p class="col-12" v-show="exerciseObj.weights>0">-{{exerciseObj.weights}}</p>
-        <p class="col-12" v-show="exerciseObj.distance>0">-{{exerciseObj.distance}}</p>
-        <p class="col-12" v-show="exerciseObj.time>0">-{{exerciseObj.time}}</p>
+        <p class="col-12" v-show="exerciseObj.title">Sets-{{exerciseObj.sets}}</p>
+        <p class="col-12" v-show="exerciseObj.reps">Reps-{{exerciseObj.reps}}</p>
+        <p class="col-12" v-show="exerciseObj.weights">Weight-{{exerciseObj.weights}}</p>
+        <p class="col-12" v-show="exerciseObj.distance">Distance-{{exerciseObj.distance}}</p>
+        <p class="col-12" v-show="exerciseObj.time">Time-{{exerciseObj.time}}</p>
       </li>
       <div v-if="newExerciseForm">
-        <form @submit.prevent="addExerciseToWorkout">
-          <div class="form-group row text-white">
-            <label for="exercise">Choose an Exercise</label>
-            <select class="form-control" id="exerciseSelect">
-              <option v-for="exercise in exercises" :key="exercise.id">{{exercise.title}}</option>
-            </select>
-          </div>
-          <i @click="addExercise(exercise)" class="fas fa-plus text-success"></i>
-        </form>
+        <select class="custom-select" id="exerciseSelect" @change="addNewExercise($event)">
+          <option selected>Choose a Exercise</option>
+          <option v-for="exercise in exercises" :key="exercise._id">{{exercise.title}}</option>
+        </select>
       </div>
     </ul>
     <i
@@ -46,6 +41,8 @@
 </template>
 
 <script>
+import Exercise from "../components/Exercise";
+
 export default {
   name: "WorkoutDetail",
   props: ["workoutData"],
@@ -71,8 +68,15 @@ export default {
     setActiveWorkout() {
       this.$store.dispatch("setActiveWorkout", this.$route.params.workoutId);
     },
-    addExercise(exercise) {
-      this.$store.dispatch("addExerciseToWorkout", exercise);
+    addExercise() {
+      let workoutId = this.workoutData.id;
+      let form = document.getElementById("exerciseSelect");
+      let exercise = form.options[form.selectedIndex].value;
+      console.log(exercise);
+      this.$store.dispatch("addExerciseToWorkout", {
+        workoutId: workoutId,
+        body: exercise
+      });
     }
   },
   data() {
@@ -80,6 +84,9 @@ export default {
       newExerciseForm: false,
       newExercise: {}
     };
+  },
+  components: {
+    Exercise
   }
 };
 </script>
