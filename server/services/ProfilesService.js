@@ -36,7 +36,9 @@ async function mergeSubsIfNeeded(profile, user) {
 function sanitizeBody(body) {
   let writable = {
     name: body.name,
-    picture: body.picture
+    picture: body.picture,
+    schedule: body.schedule,
+    stats: body.stats
   };
   return writable;
 }
@@ -79,7 +81,7 @@ class ProfileService {
     let profile = await dbContext.Profile.findOneAndUpdate(
       { email: user.email },
       { $set: update },
-      { runValidators: true, setDefaultsOnInsert: true, new: true }
+      { runValidators: true, setDefaultsOnInsert: true, new: true },
     );
     return profile;
   }
