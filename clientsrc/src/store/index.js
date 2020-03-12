@@ -64,7 +64,7 @@ export default new Vuex.Store({
     },
     async getStats({ commit }) {
       try {
-        let res = await api.get("stats");
+        let res = await api.get("profile/");
         commit('setStats', res.data)
       } catch (error) {
         console.error(error);

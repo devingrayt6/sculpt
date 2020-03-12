@@ -3,16 +3,7 @@ const Schema = mongoose.Schema;
 const ObjId = mongoose.SchemaTypes.ObjectId
 
 
-const Schedule = new Schema({
-  monday: { type: String },
-  tuesday: { type: String },
-  wednesday: { type: String },
-  thursday: { type: String },
-  friday: { type: String },
-  saturday: { type: String },
-  sunday: { type: String },
   // NOTE If you wish to add additional public properties for Schedules do so here
-})
 
 const Profile = new Schema(
   {
@@ -20,7 +11,15 @@ const Profile = new Schema(
     email: { type: String, lowercase: true, unique: true },
     name: { type: String, required: true },
     picture: { type: String },
-    stats: {},
+    stats: {
+      "bench": 0,
+      "deadLift": 0,
+      "pullUp" : 0,
+      "squat": 0,
+      "sitUp": 0,
+      "pushUp": 0,
+      "run": 0
+    },
     schedule: {
       "Sunday": {},
       "Monday": {},
