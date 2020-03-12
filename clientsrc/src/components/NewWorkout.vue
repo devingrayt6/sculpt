@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="col-12 newWorkout-form">
-      <form class="pl-2 newForm">
+      <form @submit.prevent="createNewWorkout" class="pl-2 newForm">
         <div class="form-group row text-white">
           <label for="exampleFormControlInput1">Workout Name</label>
           <input
@@ -14,16 +14,16 @@
         <div class="form-group row text-white">
           <label for="exampleFormControlSelect1">Type</label>
           <select class="form-control" id="exampleFormControlSelect1">
-            <option>Chest</option>
-            <option>Back</option>
-            <option>Legs</option>
-            <option>Core</option>
-            <option>Arms</option>
-            <option>Shoulders</option>
-            <option>Cardio</option>
+            <option value="chest">Chest</option>
+            <option value="back">Back</option>
+            <option value="legs">Legs</option>
+            <option value="core">Core</option>
+            <option value="arms">Arms</option>
+            <option value="shoulders">Shoulders</option>
+            <option value="cardio">Cardio</option>
           </select>
         </div>
-        <button class="btn btn-sm btn-success float-right">Create</button>
+        <button type="submit" class="btn btn-sm btn-success float-right">Create</button>
       </form>
     </div>
     <div class="col-4 my-exercises"></div>
@@ -32,7 +32,20 @@
 
 <script>
 export default {
-  name: "NewWorkout"
+  name: "NewWorkout",
+  data() {
+    return {
+      newWorkout: {
+        title: "",
+        type: ""
+      }
+    };
+  },
+  methods: {
+    createNewWorkout() {
+      this.$store.dispatch("createWorkout", this.newWorkout);
+    }
+  }
 };
 </script>
 

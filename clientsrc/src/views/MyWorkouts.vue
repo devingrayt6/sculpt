@@ -53,7 +53,7 @@
       <h4 class="text-white">Create New Workout</h4>
       <new-workout />
     </div>
-    <div class="row activeWorkout">
+    <div class="row activeWorkout" v-if="activeWorkout">
       <h2>Active Workout</h2>
     </div>
   </div>
@@ -61,13 +61,15 @@
 
 <script>
 import NewWorkout from "../components/NewWorkout";
+import Workout from "../components/Workout";
 
 export default {
   name: "MyWorkouts",
   computed: {},
   data() {
     return {
-      workoutForm: false
+      workoutForm: false,
+      activeWorkout: false
     };
   },
   mounted() {
