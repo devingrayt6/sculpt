@@ -25,9 +25,13 @@
         <p class="col-12" v-show="exerciseObj.time">Time-{{exerciseObj.time}}</p>
       </li>
       <div v-if="newExerciseForm">
-        <select class="custom-select" id="exerciseSelect" @change="addNewExercise($event)">
-          <option selected>Add New Exercise</option>
-          <option v-for="exercise in exercises" :key="exercise._id">{{exercise.title}}</option>
+        <select class="custom-select" id="exerciseSelect" @change="addExercise" v-model="selected">
+          <option selected :value="{}">Add New Exercise</option>
+          <option
+            v-for="exerciseObj in exercises"
+            :key="exerciseObj._id"
+            :value="exerciseObj"
+          >{{exerciseObj.title}}</option>
         </select>
       </div>
     </ul>
@@ -59,28 +63,34 @@ export default {
     },
     exercises() {
       return this.$store.state.exercises;
+    },
+    workoutId() {
+      return this.workout.id;
     }
   },
   methods: {
     addExercise() {
-      let workoutId = this.workoutData.id;
-      let form = document.getElementById("exerciseSelect");
-      let exercise = form.options[form.selectedIndex].value;
+      let workoutId = this.workoutId;
+      let exercise = this.selected;
       console.log(exercise);
-      this.$store.dispatch("addExerciseToWorkout", {
-        workoutId: workoutId,
-        body: exercise
-      });
+      // this.$store.dispatch("addExerciseToWorkout", {
+      //   workoutId: workoutId,
+      //   body: exercise
+      // });
     }
   },
   data() {
     return {
       newExerciseForm: false,
-      newExercise: {}
+      newExercise: {},
+      selected: {}
     };
   },
   components: {
     Exercise
+  },
+  mounted() {
+    this.$store.dispatch("getExercises");
   }
 };
 </script>
