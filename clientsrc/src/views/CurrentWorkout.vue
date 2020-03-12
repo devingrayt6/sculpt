@@ -33,60 +33,6 @@
             </div>
           </div>
         </div>
-        <div class="card">
-          <div class="card-header" id="headingTwo">
-            <h2 class="mb-0">
-              <button
-                class="btn btn-link collapsed"
-                type="button"
-                data-toggle="collapse"
-                data-target="#collapseTwo"
-                aria-expanded="false"
-                aria-controls="collapseTwo"
-              >Exercise title</button>
-            </h2>
-          </div>
-          <div
-            id="collapseTwo"
-            class="collapse"
-            aria-labelledby="headingTwo"
-            data-parent="#accordionExample"
-          >
-            <div class="card-body">
-              <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-                <label class="form-check-label" for="exampleCheck1">Check me out</label>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-header" id="headingThree">
-            <h2 class="mb-0">
-              <button
-                class="btn btn-link collapsed"
-                type="button"
-                data-toggle="collapse"
-                data-target="#collapseThree"
-                aria-expanded="false"
-                aria-controls="collapseThree"
-              >Exercise title</button>
-            </h2>
-          </div>
-          <div
-            id="collapseThree"
-            class="collapse"
-            aria-labelledby="headingThree"
-            data-parent="#accordionExample"
-          >
-            <div class="card-body">
-              <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-                <label class="form-check-label" for="exampleCheck1">Check me out</label>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
       <button type="submit" class="btn btn-success float-right">Workout Complete</button>
     </form>

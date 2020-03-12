@@ -12,8 +12,8 @@
           />
         </div>
         <div class="form-group row text-white">
-          <label for="exampleFormControlSelect1">Type</label>
-          <select class="form-control" id="exampleFormControlSelect1">
+          <label for="typeSelect">Type</label>
+          <select class="form-control" id="typeSelect">
             <option value="chest">Chest</option>
             <option value="back">Back</option>
             <option value="legs">Legs</option>
@@ -43,7 +43,13 @@ export default {
   },
   methods: {
     createNewWorkout() {
-      this.$store.dispatch("createWorkout", this.newWorkout);
+      let form = document.getElementById("typeSelect");
+      let exercise = form.options[form.selectedIndex].value;
+      let body = {
+        title: this.newWorkout.title,
+        type: exercise
+      };
+      this.$store.dispatch("createWorkout", body);
     }
   }
 };

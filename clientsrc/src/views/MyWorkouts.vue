@@ -5,43 +5,7 @@
     </div>
     <div class="snap-container">
       <div class="row workout-row">
-        <!-- <workouts/> -->
-
-        <div class="snap-child">
-          <div class="workout arms text-center">
-            <h2 class="title">Workout Title</h2>
-          </div>
-        </div>
-        <div class="snap-child">
-          <div class="workout shoulders text-center">
-            <h2 class="title">Workout TItle</h2>
-          </div>
-        </div>
-        <div class="snap-child">
-          <div class="workout back text-center">
-            <h2 class="title">Workout TItle</h2>
-          </div>
-        </div>
-        <div class="snap-child">
-          <div class="workout chest text-center">
-            <h2 class="title">Workout TItle</h2>
-          </div>
-        </div>
-        <div class="snap-child">
-          <div class="workout legs text-center">
-            <h2 class="title">Workout TItle</h2>
-          </div>
-        </div>
-        <div class="snap-child">
-          <div class="workout core text-center">
-            <h2 class="title">Workout TItle</h2>
-          </div>
-        </div>
-        <div class="snap-child">
-          <div class="workout cardio text-center">
-            <h2 class="title">Workout TItle</h2>
-          </div>
-        </div>
+        <workout v-for="(workoutObj) in workouts" :key="workoutObj._id" :workoutData="workoutObj" />
         <div class="snap-child">
           <div class="workout bg-primary text-center">
             <button @click="workoutForm=true" class="btn btn-outline-success">Create New Workout</button>
@@ -54,7 +18,7 @@
       <new-workout />
     </div>
     <div class="row activeWorkout" v-if="activeWorkout">
-      <h2>Active Workout</h2>
+      <workout-detail />
     </div>
   </div>
 </template>
@@ -62,31 +26,30 @@
 <script>
 import NewWorkout from "../components/NewWorkout";
 import Workout from "../components/Workout";
+import WorkoutDetail from "../components/WorkoutDetail";
 
 export default {
   name: "MyWorkouts",
-  computed: {},
   data() {
     return {
       workoutForm: false,
-      activeWorkout: false
+      activeWorkout: false,
+      newWorkout: {}
     };
   },
   mounted() {
-    this.$store.dispatch("getWorkoutsByUserId");
+    this.$store.dispatch("getWorkouts");
   },
   computed: {
     workouts() {
       return this.$store.state.workouts;
     }
   },
-  methods: {
-    addWorkout() {},
-    deleteWorkout() {},
-    editWorkout() {}
-  },
+  methods: {},
   components: {
-    NewWorkout
+    NewWorkout,
+    Workout,
+    WorkoutDetail
   }
 };
 </script>
