@@ -1,6 +1,6 @@
 <template>
-  <div class="col-8 workout deadlift text-center">
-    <h2 class="title">Workout Title</h2>
+  <div class="col-8 workout text-center" :id="workoutData.type">
+    <h2 @click="setActiveWorkout" class="title">{{workoutData.title}}</h2>
   </div>
 </template>
 
@@ -9,7 +9,9 @@ export default {
   name: "Workout",
   props: ["workoutData"],
   methods: {
-    setActiveWorkout() {}
+    setActiveWorkout() {
+      this.$store.dispatch("setActiveWorkout", this.workoutData);
+    }
   }
 };
 </script>

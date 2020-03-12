@@ -1,10 +1,10 @@
-.shoulders{
+#shoulders{
   background-image: url(./shoulder.jpg);
   background-position: left;
   background-size: cover;
 }
 
-.arms{
+#arms{
   background-image: url(./arms.jpg);
   background-position: bottom;
   background-size: cover;
@@ -25,31 +25,31 @@
   height: 75px;
 }
 
-.back{
+#back{
   background-image: url(./pull\ up.jpg);
   background-position: left;
   background-size: cover;
 }
 
-.chest{
+#chest{
   background-image: url(./pushup.jpg);
   background-position: center;
   background-size: cover;
 }
 
-.cardio{
+#cardio{
   background-image: url(./run.jpg);
   background-position: left;
   background-size: cover;
 }
 
-.core{
+#core{
   background-image: url(./Sit-Up.jpg);
   background-position: left;
   background-size: cover;
 }
 
-.legs{
+#legs{
   background-image: url(./squat.jpg);
   background-position: left;
   background-size: cover;
