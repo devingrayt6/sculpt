@@ -35,16 +35,16 @@
         </select>
       </div>
     </ul>
-    <i
+    <button
       v-if="!newExerciseForm"
       @click.prevent="newExerciseForm=true"
-      class="fas fa-dumbbell text-success float-right m-3 h2"
-    ></i>
-    <i
+      class="btn btn-success m-3 h4"
+    >Build Workout</button>
+    <button
       v-if="newExerciseForm"
       @click.prevent="newExerciseForm=false"
-      class="fas fa-dumbbell text-warning float-right m-3 h2"
-    ></i>
+      class="btn btn-warning float-right m-3 h2"
+    >Cancel</button>
   </div>
 </template>
 
@@ -70,13 +70,13 @@ export default {
   },
   methods: {
     addExercise() {
-      let workoutId = this.workoutId;
+      debugger;
       let exercise = this.selected;
-      console.log(exercise);
-      // this.$store.dispatch("addExerciseToWorkout", {
-      //   workoutId: workoutId,
-      //   body: exercise
-      // });
+      let workoutId = this.workout.id;
+      this.$store.dispatch("addExerciseToWorkout", {
+        workoutId: workoutId,
+        body: exercise
+      });
     }
   },
   data() {

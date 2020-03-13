@@ -5,6 +5,7 @@
         <div class="form-group row text-white">
           <label for="exampleFormControlInput1">Workout Name</label>
           <input
+            v-model="newWorkout.title"
             type="text"
             class="form-control"
             id="exampleFormControlInput1"

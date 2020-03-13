@@ -140,7 +140,7 @@ export default new Vuex.Store({
     },
     async addExerciseToWorkout({ commit }, data) {
       try {
-        let res = await api.put(`workouts/${data.workoutId}/exercise`, data)
+        let res = await api.put(`workouts/${data.workoutId}/exercise`, data.body)
       } catch (error) {
         console.error(error)
       }
