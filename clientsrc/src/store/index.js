@@ -33,8 +33,7 @@ export default new Vuex.Store({
       state.stats = stats
     },
     setWod(state, day) {
-      // state.wod = state.profile.schedule[day]
-      console.log(state.profile.schedule[day])
+      state.wod = state.profile.schedule[day]
     },
     setWorkouts(state, workouts) {
       state.workouts = workouts

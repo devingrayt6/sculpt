@@ -1,6 +1,10 @@
 <template>
   <div class="col-8 workout text-center" :id="workoutData.type">
-    <h2 @click="setActiveWorkout" class="title text-white">{{workoutData.title}}</h2>
+    <h2 @click="setActiveWorkout" class="title text-white" v-if="workoutData">{{workoutData.title}}</h2>
+    <div v-else>
+      <img src="../assets/restday.jpg" width="100%" />
+      <h5>No Workout Scheduled</h5>
+    </div>
   </div>
 </template>
 
