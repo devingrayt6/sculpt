@@ -3,11 +3,11 @@ const Schema = mongoose.Schema;
 const ObjId = mongoose.Schema.Types.ObjectId
 
 const ExerciseData = {
-  title: {type: String},
-  reps: {type: String},
-  sets: {type: String},
-  weights: {type: String},
-  distance: { type: Number },
+  title: { type: String },
+  reps: { type: Number },
+  sets: { type: Number },
+  weights: { type: Number },
+  distance: { type: String },
   time: { type: String },
 }
 
@@ -21,7 +21,7 @@ const Workout = new Schema(
   },
   { timestamps: true, toJSON: { virtuals: true } })
 
-  Workout.virtual("creator",
+Workout.virtual("creator",
   {
     localField: "creatorEmail",
     ref: "Profile",
