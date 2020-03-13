@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid" v-if="profile">
     <div>
       <h3 class="text-center my-3">{{dayOfWeek}} {{todaysDate}}</h3>
     </div>
@@ -83,7 +83,6 @@ export default {
       this.$store.dispatch("getStats");
       this.$store.dispatch("getWorkouts");
       this.$store.dispatch("setActiveWorkout");
-      this.$store.dispatch("getProfile");
       this.selectedDay = this.dayOfWeek;
     }
   },
@@ -99,6 +98,9 @@ export default {
     },
     getWod() {
       return this.$store.state.profile.schedule[this.selectedDay];
+    },
+    profile() {
+      return this.$store.state.profile;
     }
   },
   methods: {
