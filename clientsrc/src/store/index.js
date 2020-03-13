@@ -59,6 +59,9 @@ export default new Vuex.Store({
     },
     createExercise(state, exercise) {
       state.exercises.push(exercise);
+    },
+    addExerciseToWorkout(state, data) {
+      state.activeWorkout.exerciseData.push(data)
     }
   },
 
@@ -132,7 +135,7 @@ export default new Vuex.Store({
     async createWorkout({ commit }, workout) {
       try {
         let res = await api.post('workouts', workout);
-        commit('createWorkout', workout)
+        commit('createWorkout', res.data)
       } catch (error) {
         console.error(error)
       }
@@ -147,7 +150,8 @@ export default new Vuex.Store({
     },
     async addExerciseToWorkout({ commit }, data) {
       try {
-        let res = await api.put(`workouts/${data.workoutId}/exercise`, data)
+        let res = await api.post(`workouts/${data.workoutId}/exercise`, data.body)
+        commit('addExerciseToWorkout', data.body)
       } catch (error) {
         console.error(error)
       }

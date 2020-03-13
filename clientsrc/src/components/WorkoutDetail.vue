@@ -13,6 +13,7 @@
         :key="exerciseObj._id"
       >
         <div class="title-row col-12">
+          <NewExerciseForm v-if="!exerciseObj" />
           <h5>
             <u>{{exerciseObj.title}}</u>
           </h5>
@@ -25,8 +26,13 @@
         <p class="col-12" v-show="exerciseObj.time">Time-{{exerciseObj.time}}</p>
       </li>
       <div v-if="newExerciseForm">
-        <select class="custom-select" id="exerciseSelect" @change="addExercise" v-model="selected">
-          <option selected :value="{}">Add New Exercise</option>
+        <select
+          class="custom-select"
+          id="exerciseSelect"
+          @change.prevent="addExercise"
+          v-model="selected"
+        >
+          <option selected :value="false">Add New Exercise</option>
           <option
             v-for="exerciseObj in exercises"
             :key="exerciseObj._id"
@@ -35,21 +41,22 @@
         </select>
       </div>
     </ul>
-    <i
+    <button
       v-if="!newExerciseForm"
       @click.prevent="newExerciseForm=true"
-      class="fas fa-dumbbell text-success float-right m-3 h2"
-    ></i>
-    <i
+      class="btn btn-success m-3 h4"
+    >Build Workout</button>
+    <button
       v-if="newExerciseForm"
       @click.prevent="newExerciseForm=false"
-      class="fas fa-dumbbell text-warning float-right m-3 h2"
-    ></i>
+      class="btn btn-warning float-right m-3 h2"
+    >Cancel</button>
   </div>
 </template>
 
 <script>
 import Exercise from "../components/Exercise";
+import NewExerciseForm from "../components/NewExerciseForm";
 
 export default {
   name: "WorkoutDetail",
@@ -70,24 +77,25 @@ export default {
   },
   methods: {
     addExercise() {
-      let workoutId = this.workoutId;
       let exercise = this.selected;
-      console.log(exercise);
-      // this.$store.dispatch("addExerciseToWorkout", {
-      //   workoutId: workoutId,
-      //   body: exercise
-      // });
+      let workoutId = this.workout.id;
+      this.$store.dispatch("addExerciseToWorkout", {
+        workoutId: workoutId,
+        body: exercise
+      });
     }
   },
   data() {
     return {
       newExerciseForm: false,
       newExercise: {},
-      selected: {}
+      selected: {},
+      createExercise: false
     };
   },
   components: {
-    Exercise
+    Exercise,
+    NewExerciseForm
   },
   mounted() {
     this.$store.dispatch("getExercises");
