@@ -20,6 +20,15 @@ const Profile = new Schema(
       "pushUp": 0,
       "run": 0
     },
+    completedExerciseStats: {
+      "bench": 0,
+      "deadLift": 0,
+      "pullUp" : 0,
+      "squat": 0,
+      "sitUp": 0,
+      "pushUp": 0,
+      "run": 0
+    },
     schedule: {
       "Sunday": {},
       "Monday": {},

@@ -23,6 +23,7 @@ export default new Vuex.Store({
     workouts: [],
     exercises: [],
     stats: [],
+    activeStat: {},
     wod: {},
   },
   mutations: {
@@ -31,6 +32,11 @@ export default new Vuex.Store({
     },
     setStats(state, stats) {
       state.stats = stats
+    },
+    setActiveStat(state, statObj){
+      debugger
+      let activeStat = state.stats[statObj].filter(el => el.stats != statObj)
+      state.activeStat = activeStat
     },
     setWod(state, day) {
       // state.wod = state.profile.schedule[day]
@@ -69,11 +75,14 @@ export default new Vuex.Store({
     },
     async getStats({ commit }) {
       try {
-        let res = await api.get("profile/");
-        commit('setStats', res.data)
+        let res = await api.get("profile");
+        commit('setStats', res.data.stats)
       } catch (error) {
         console.error(error);
       }
+    },
+    setActiveStat({ commit }, statObj ) {
+      commit("setActiveStat", statObj)
     },
 
     async getWorkouts({ commit }) {

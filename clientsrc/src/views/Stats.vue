@@ -1,59 +1,54 @@
 <template>
   <div>
-    <div class="col-12">
-      <div class="card mt-3">
-        <div class="card-body">
-          <p>Stats</p>
-          <h2>GRAPH</h2>
-          <p>Weight: </p>
-        </div>
-      </div>
-    </div>
+    <chart v-if="charts" :chartData="charts" />
     <div class="col-12 stats-form">
-          <label for="exampleFormControlSelect1">Type</label>
-          <select class="form-control" id="exampleFormControlSelect1" @change="toggleStats($event)">
-            <option value="bench">Bench</option>
-            <option value="push-ups">Push Ups</option>
-            <option value="squats">Squats</option>
-            <option value="dead-lifts">Dead Lifts</option>
-            <option value="sit-ups">Sit Ups</option>
-            <option value="pull-ups">Pull Ups</option>
-            <option value="run">Run</option>
-          </select>
+      <label for="statsPage">Type</label>
+      <select class="form-control" id="statsPage" @change="toggleStats($event)">
+        <option value="bench">Bench</option>
+        <option value="pushUp">Push Ups</option>
+        <option value="squat">Squats</option>
+        <option value="deadLift">Dead Lifts</option>
+        <option value="sitUp">Sit Ups</option>
+        <option value="pullUp">Pull Ups</option>
+        <option value="run">Run</option>
+      </select>
     </div>
-    <div class="col-4 my-stats"></div>
+    <div class="col-4 my-stats">
+      <p>{{this.exerciseChoice}}</p>
+      <canvas id="myChart" width="400" height="400"></canvas>
+    </div>
   </div>
 </template>
 
 <script>
+import Chart from "../components/Chart"
 export default {
   name: "Stats",
   mounted() {
-    console.log(this.$store.state.profile.id)
+    this.$store.dispatch("getStats")
+  },
+  
+  data(){
+    return {  
+      charts: false, 
+      exerciseChoice: this.$store.state.stats
+    }
   },
   computed: {
     stats(){
-      return this.$store.state.profile.stats
-    }
-  },
-  data() {
-    return {
-        data:{
-          graphType: ""
-      }
+      // get the specific stats
+      return this.$store.state.activeStat
     }
   },
   methods: {
     toggleStats(event) {
-      let profileId = this.$store.state.profile.id
-      let data = {
-        
-      }
-      this.$store.dispatch("getStats",  )
-      console.log(event.target.value)
-      // this.graphType = even
-      // console.log(this.graphType)
+      this.charts = true
+      let activeStat = event.target.value
+      this.$store.dispatch("setActiveStat", activeStat)
     },
+  },
+  components: {
+    Chart
   }
 };
 </script>
