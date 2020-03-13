@@ -34,7 +34,6 @@ export default new Vuex.Store({
       state.stats = stats
     },
     setActiveStat(state, statObj){
-      debugger
       let activeStat = state.stats[statObj].filter(el => el.stats != statObj)
       state.activeStat = activeStat
     },
