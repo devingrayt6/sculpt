@@ -7,8 +7,8 @@ const ExerciseData = {
   reps: { type: Number },
   sets: { type: Number },
   weights: { type: Number },
-  distance: { type: Number },
-  time: { type: Number },
+  distance: { type: String },
+  time: { type: String },
 }
 
 const Workout = new Schema(
