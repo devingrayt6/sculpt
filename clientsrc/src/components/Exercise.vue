@@ -1,37 +1,23 @@
 <template>
-  <div class="card">
-    <div class="card-header" id="headingOne">
-      <h2 class="mb-0">
-        <button
-          class="btn btn-link"
-          type="button"
-          data-toggle="collapse"
-          data-target="#exercise+ID"
-          aria-expanded="true"
-          aria-controls="collapseOne"
-        >Exercise title</button>
-      </h2>
+  <div>
+    <div class="title-row col-12">
+      <h5>
+        <u>{{exerciseData.title}}</u>
+      </h5>
+      <p @click="deleteExercise(exerciseData)" class="deletebutton text-danger">X</p>
     </div>
-
-    <div
-      id="exercise+ID"
-      class="collapse show"
-      aria-labelledby="headingOne"
-      data-parent="#currentWorkout"
-    >
-      <div class="card-body">
-        <div class="form-group form-check">
-          <input type="checkbox" class="form-check-input" id="Type" />
-          <label class="form-check-label" for="Type">Sets: 3, Weight: 50lb, Reps: 5</label>
-        </div>
-      </div>
-    </div>
+    <p class="col-12" v-show="exerciseData.sets">Sets-{{exerciseData.sets}}</p>
+    <p class="col-12" v-show="exerciseData.reps">Reps-{{exerciseData.reps}}</p>
+    <p class="col-12" v-show="exerciseData.weights">Weight-{{exerciseData.weights}}</p>
+    <p class="col-12" v-show="exerciseData.distance">Distance-{{exerciseData.distance}}</p>
+    <p class="col-12" v-show="exerciseData.time">Time-{{exerciseData.time}}</p>
   </div>
 </template>
 
 <script>
 export default {
   name: "Exercise",
+  props: ["ExerciseData"],
   methods: {}
 };
 </script>
