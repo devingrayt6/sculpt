@@ -5,25 +5,27 @@
     </div>
     <div class="row">
       <div class="offset-1 col-10 offset-1">
-        <h2 class="overlay">Todays Workout</h2>
-        <router-link
-          to="/currentworkout"
-          v-if="selectedDay==dayOfWeek"
-          @click="setActiveWorkout(this.$store.state.profile.schedule[this.selectedDay])"
-        >
-          <todays-workout :workoutData="getWod" />
-        </router-link>
-        <router-link
-          @click="setActiveWorkout(this.$store.state.profile.schedule[this.selectedDay])"
-          to="/myworkouts"
-          v-else
-        >
-          <todays-workout :workoutData="getWod" />
-        </router-link>
-        <button
-          v-if="this.$store.state.profile.schedule[selectedDay]"
-          @click="editWod"
-        >change workout</button>
+        <div class="current-wod text-center">
+          <router-link
+            to="/currentworkout"
+            v-if="selectedDay==dayOfWeek"
+            @click="setActiveWorkout(this.$store.state.profile.schedule[this.selectedDay])"
+          >
+            <todays-workout :workoutData="getWod" class="today-workout" />
+          </router-link>
+          <router-link
+            @click="setActiveWorkout(this.$store.state.profile.schedule[this.selectedDay])"
+            to="/myworkouts"
+            v-else
+          >
+            <todays-workout :workoutData="getWod" class="today-workout" />
+          </router-link>
+          <button
+            class="btn btn-success change-workout text-center"
+            v-if="this.$store.state.profile.schedule[selectedDay]"
+            @click="editWod"
+          >change workout</button>
+        </div>
       </div>
     </div>
 
@@ -53,46 +55,46 @@
 
     <div class="icons" id="icons">
       <div class="text-center" v-if="this.$store.state.profile.schedule[`Sunday`]">
-        <i class="fas fa-dumbbell"></i>
+        <i class="fas fa-dumbbell" @click="setWod('Sunday')"></i>
       </div>
       <div class="text-center" v-else>
-        <i class="fas fa-bed"></i>
+        <i class="fas fa-bed" @click="setWod('Sunday')"></i>
       </div>
       <div class="text-center" v-if="this.$store.state.profile.schedule[`Monday`]">
-        <i class="fas fa-dumbbell"></i>
+        <i class="fas fa-dumbbell" @click="setWod('Monday')"></i>
       </div>
       <div class="text-center" v-else>
-        <i class="fas fa-bed"></i>
+        <i class="fas fa-bed" @click="setWod('Monday')"></i>
       </div>
       <div class="text-center" v-if="this.$store.state.profile.schedule[`Tuesday`]">
-        <i class="fas fa-dumbbell"></i>
+        <i class="fas fa-dumbbell" @click="setWod('Tuesday')"></i>
       </div>
       <div class="text-center" v-else>
-        <i class="fas fa-bed"></i>
+        <i class="fas fa-bed" @click="setWod('Tuesday')"></i>
       </div>
       <div class="text-center" v-if="this.$store.state.profile.schedule[`Wednesday`]">
-        <i class="fas fa-dumbbell"></i>
+        <i class="fas fa-dumbbell" @click="setWod('Wednesday')"></i>
       </div>
       <div class="text-center" v-else>
-        <i class="fas fa-bed"></i>
+        <i class="fas fa-bed" @click="setWod('Wednesday')"></i>
       </div>
       <div class="text-center" v-if="this.$store.state.profile.schedule[`Thursday`]">
-        <i class="fas fa-dumbbell"></i>
+        <i class="fas fa-dumbbell" @click="setWod('Thursday')"></i>
       </div>
       <div class="text-center" v-else>
-        <i class="fas fa-bed"></i>
+        <i class="fas fa-bed" @click="setWod('Thursday')"></i>
       </div>
       <div class="text-center" v-if="this.$store.state.profile.schedule[`Friday`]">
-        <i class="fas fa-dumbbell"></i>
+        <i class="fas fa-dumbbell" @click="setWod('Friday')"></i>
       </div>
       <div class="text-center" v-else>
-        <i class="fas fa-bed"></i>
+        <i class="fas fa-bed" @click="setWod('Friday')"></i>
       </div>
-      <div class="text-center" v-if="this.$store.state.profile.schedule[`Saturday`]">
-        <i class="fas fa-dumbbell"></i>
+      <div class="text-center" v-if="this.$store.state.profile.schedule[`Friday`]">
+        <i class="fas fa-dumbbell" @click="setWod('Saturday')"></i>
       </div>
       <div class="text-center" v-else>
-        <i class="fas fa-bed"></i>
+        <i class="fas fa-bed" @click="setWod('Saturday')"></i>
       </div>
     </div>
 
@@ -299,5 +301,17 @@ export default {
 .toggled-workouts {
   height: 15rem;
   overflow-y: auto;
+}
+.today-workout {
+  width: 100%;
+  margin: auto auto;
+}
+.change-workout {
+  justify-self: center;
+  width: 45%;
+  height: 15%;
+  padding: 1px;
+}
+.current-wod {
 }
 </style>
