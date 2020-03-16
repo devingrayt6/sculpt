@@ -47,6 +47,15 @@
           data-target="#navbarText"
           class="nav-item"
           v-if="$auth.isAuthenticated"
+          :class="{ active: $route.name == 'MyExercises' }"
+        >
+          <router-link class="nav-link" :to="{ name: 'MyExercises' }">My Exercises</router-link>
+        </li>
+        <li
+          data-toggle="collapse"
+          data-target="#navbarText"
+          class="nav-item"
+          v-if="$auth.isAuthenticated"
           :class="{ active: $route.name == 'CurrentWorkout' }"
         >
           <router-link class="nav-link" :to="{ name: 'CurrentWorkout' }">Current Workout</router-link>

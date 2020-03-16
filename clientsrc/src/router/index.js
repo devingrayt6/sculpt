@@ -12,6 +12,8 @@ import CurrentWorkout from "../views/CurrentWorkout.vue";
 import Dashboard from "../views/Dashboard.vue";
 // @ts-ignore
 import Stats from "../views/Stats.vue";
+// @ts-ignore
+import MyExercises from "../views/MyExercises.vue";
 import { authGuard } from "@bcwdev/auth0-vue";
 
 Vue.use(VueRouter);
@@ -32,6 +34,12 @@ const routes = [
     path: "/myworkouts",
     name: "MyWorkouts",
     component: MyWorkouts,
+    beforeEnter: authGuard
+  },
+  {
+    path: "/myexercises",
+    name: "MyExercises",
+    component: MyExercises,
     beforeEnter: authGuard
   },
   {

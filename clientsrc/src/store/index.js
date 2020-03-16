@@ -33,7 +33,7 @@ export default new Vuex.Store({
     setStats(state, stats) {
       state.stats = stats
     },
-    setActiveStat(state, statObj){
+    setActiveStat(state, statObj) {
       let activeStat = state.stats[statObj].filter(el => el.stats != statObj)
       state.activeStat = activeStat
     },
@@ -88,7 +88,7 @@ export default new Vuex.Store({
         console.error(error);
       }
     },
-    setActiveStat({ commit }, statObj ) {
+    setActiveStat({ commit }, statObj) {
       commit("setActiveStat", statObj)
     },
 
@@ -140,10 +140,11 @@ export default new Vuex.Store({
         console.error(error)
       }
     },
-    async createExercise({ commit }, exercise) {
+    async createExercise({ commit, dispatch }, exercise) {
       try {
         let res = await api.post('exercises', exercise);
         commit('createExercise', exercise);
+        dispatch('getExercises')
       } catch (error) {
         console.error(error)
       }

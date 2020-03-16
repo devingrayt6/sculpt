@@ -8,10 +8,10 @@ const Exercise = new Schema(
     sets: { type: Number },
     reps: { type: Number },
     weight: { type: Number },
-    distance: { type: Number },
+    distance: { type: String },
     time: { type: String },
     creatorEmail: { type: String, required: true }
-  // NOTE If you wish to add additional public properties for Workouts do so here
+    // NOTE If you wish to add additional public properties for Workouts do so here
   },
   { timestamps: true, toJSON: { virtuals: true } })
 
