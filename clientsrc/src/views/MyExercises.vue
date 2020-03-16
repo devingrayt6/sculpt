@@ -52,7 +52,8 @@ export default {
   components: {
     NewExerciseForm,
     Exercise
-  }
+  },
+  methods: {}
 };
 </script>
 

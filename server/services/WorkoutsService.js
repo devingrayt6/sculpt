@@ -42,7 +42,8 @@ class WorkoutsService {
 
 
   async deleteExercise(id, exerciseId) {
-    return await dbContext.Workout.findOneAndUpdate({ _id: id }, { $pull: { exerciseData: { _id: exerciseId } } }, { new: true })
+    let data = await dbContext.Workout.findOneAndUpdate({ _id: id }, { $pull: { exerciseData: { _id: exerciseId } } }, { new: true })
+    return data
   }
 }
 

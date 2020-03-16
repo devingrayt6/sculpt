@@ -12,7 +12,7 @@
         v-for="(exerciseObj) in exerciseData"
         :key="exerciseObj.title"
       >
-        <div class="title-row col-12" v-if="exerciseObj.title">
+        <div class="title-row col-12">
           <h5>
             <u>{{exerciseObj.title}}</u>
           </h5>
@@ -53,8 +53,6 @@
 </template>
 
 <script>
-import Exercise from "../components/Exercise";
-
 export default {
   name: "WorkoutDetail",
   props: ["workoutData"],
@@ -80,6 +78,10 @@ export default {
         workoutId: workoutId,
         body: exercise
       });
+    },
+    deleteExercise(data) {
+      this.$store.dispatch("deleteExerciseFromWorkout", data);
+      this.exerciseData;
     }
   },
   data() {
@@ -87,9 +89,6 @@ export default {
       newExerciseForm: false,
       selected: {}
     };
-  },
-  components: {
-    Exercise
   },
   mounted() {
     this.$store.dispatch("getExercises");
