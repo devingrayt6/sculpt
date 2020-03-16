@@ -18,7 +18,11 @@
 export default {
   name: "Exercise",
   props: ["exerciseData"],
-  methods: {}
+  methods: {
+    deleteExercise(data) {
+      this.$store.dispatch("deleteExercise", data._id);
+    }
+  }
 };
 </script>
 
