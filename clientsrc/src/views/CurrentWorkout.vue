@@ -5,7 +5,7 @@
     </div>
     <div
       class="m-1 bg-white p-1 row border border-dark"
-      v-for="(exerciseObj) in exerciseData"
+      v-for="exerciseObj in exerciseData"
       :key="exerciseObj._id"
     >
       <h2
@@ -15,8 +15,8 @@
         :data-target="'#target'+exerciseObj._id"
       >{{exerciseObj.title}}</h2>
       <!-- <p class="col-6" v-show="exerciseObj.sets">Sets-{{exerciseObj.sets}}</p> -->
-      <ul class="col-12 collapse" :id="'target'+exerciseObj._id">
-        <li v-for="n in exerciseObj.sets*1" class="listItem row">
+      <ul class="col-12 collapse" :id="'target'+exerciseObj._id" v-if="exerciseObj.sets">
+        <li v-for="n in exerciseObj.sets*1" :key="n.title" class="listItem row">
           <p>
             <input class="form-check-input position-static" type="checkbox" />
           </p>
@@ -34,6 +34,9 @@
 <script>
 export default {
   name: "CurrentWorkout",
+  mounted() {
+    console.log(this.$store.state.activeWorkout.exerciseData);
+  },
   computed: {
     workout() {
       return this.$store.state.activeWorkout;

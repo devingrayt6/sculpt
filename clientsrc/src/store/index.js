@@ -20,7 +20,7 @@ let api = Axios.create({
 export default new Vuex.Store({
   state: {
     profile: {},
-    activeWorkout: {},
+    activeWorkout: { exercises: [] },
     workouts: [],
     exercises: [],
     stats: [],
