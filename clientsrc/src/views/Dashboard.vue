@@ -6,10 +6,18 @@
     <div class="row">
       <div class="offset-1 col-10 offset-1">
         <h2 class="overlay">Todays Workout</h2>
-        <router-link to="/currentworkout" v-if="selectedDay==dayOfWeek">
+        <router-link
+          to="/currentworkout"
+          v-if="selectedDay==dayOfWeek"
+          @click="setActiveWorkout(this.$store.state.profile.schedule[this.selectedDay])"
+        >
           <todays-workout :workoutData="getWod" />
         </router-link>
-        <router-link to="/myworkouts" v-else>
+        <router-link
+          @click="setActiveWorkout(this.$store.state.profile.schedule[this.selectedDay])"
+          to="/myworkouts"
+          v-else
+        >
           <todays-workout :workoutData="getWod" />
         </router-link>
         <button
