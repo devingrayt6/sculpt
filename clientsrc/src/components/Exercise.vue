@@ -8,7 +8,7 @@
     </div>
     <p class="col-12" v-show="exerciseData.sets">Sets-{{exerciseData.sets}}</p>
     <p class="col-12" v-show="exerciseData.reps">Reps-{{exerciseData.reps}}</p>
-    <p class="col-12" v-show="exerciseData.weights">Weight-{{exerciseData.weights}}</p>
+    <p class="col-12" v-show="exerciseData.weight">Weight-{{exerciseData.weight}}</p>
     <p class="col-12" v-show="exerciseData.distance">Distance-{{exerciseData.distance}}</p>
     <p class="col-12" v-show="exerciseData.time">Time-{{exerciseData.time}}</p>
   </div>
@@ -17,10 +17,23 @@
 <script>
 export default {
   name: "Exercise",
-  props: ["ExerciseData"],
+  props: ["exerciseData"],
   methods: {}
 };
 </script>
 
-<style>
+<style scoped>
+.listItem {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  position: relative;
+  background-color: transparent;
+  align-items: baseline;
+}
+.title-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 </style>

@@ -10,10 +10,9 @@
       <li
         class="list-group-item listItem row p-2 m-2"
         v-for="(exerciseObj) in exerciseData"
-        :key="exerciseObj._id"
+        :key="exerciseObj.title"
       >
-        <div class="title-row col-12">
-          <NewExerciseForm v-if="!exerciseObj" />
+        <div class="title-row col-12" v-if="exerciseObj.title">
           <h5>
             <u>{{exerciseObj.title}}</u>
           </h5>
@@ -21,7 +20,7 @@
         </div>
         <p class="col-12" v-show="exerciseObj.sets">Sets-{{exerciseObj.sets}}</p>
         <p class="col-12" v-show="exerciseObj.reps">Reps-{{exerciseObj.reps}}</p>
-        <p class="col-12" v-show="exerciseObj.weights">Weight-{{exerciseObj.weights}}</p>
+        <p class="col-12" v-show="exerciseObj.weight">Weight-{{exerciseObj.weight}}</p>
         <p class="col-12" v-show="exerciseObj.distance">Distance-{{exerciseObj.distance}}</p>
         <p class="col-12" v-show="exerciseObj.time">Time-{{exerciseObj.time}}</p>
       </li>
@@ -32,7 +31,6 @@
           @change.prevent="addExercise"
           v-model="selected"
         >
-          <option selected :value="false">Add New Exercise</option>
           <option
             v-for="exerciseObj in exercises"
             :key="exerciseObj._id"
@@ -56,7 +54,6 @@
 
 <script>
 import Exercise from "../components/Exercise";
-import NewExerciseForm from "../components/NewExerciseForm";
 
 export default {
   name: "WorkoutDetail",
@@ -88,14 +85,11 @@ export default {
   data() {
     return {
       newExerciseForm: false,
-      newExercise: {},
-      selected: {},
-      createExercise: false
+      selected: {}
     };
   },
   components: {
-    Exercise,
-    NewExerciseForm
+    Exercise
   },
   mounted() {
     this.$store.dispatch("getExercises");

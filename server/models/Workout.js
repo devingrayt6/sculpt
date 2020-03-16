@@ -6,7 +6,7 @@ const ExerciseData = {
   title: { type: String },
   reps: { type: Number },
   sets: { type: Number },
-  weights: { type: Number },
+  weight: { type: Number },
   distance: { type: String },
   time: { type: String },
 }

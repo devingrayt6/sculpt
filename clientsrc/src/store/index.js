@@ -161,10 +161,11 @@ export default new Vuex.Store({
         console.error(error);
       }
     },
-    async createExercise({ commit }, exercise) {
+    async createExercise({ commit, dispatch }, exercise) {
       try {
         let res = await api.post('exercises', exercise);
         commit('createExercise', exercise);
+        dispatch('getExercises')
       } catch (error) {
         console.error(error)
       }
