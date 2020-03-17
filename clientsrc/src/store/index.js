@@ -33,6 +33,9 @@ export default new Vuex.Store({
     setStats(state, stats) {
       state.stats = stats
     },
+    // saveStats(state, updateStats) {
+    //   state.stats = updateStats
+    // },
     setActiveStat(state, statObj){
       let activeStat = state.stats[statObj].filter(el => el.stats != statObj)
       state.activeStat = activeStat
@@ -46,11 +49,9 @@ export default new Vuex.Store({
     updateSchedule(state, data) {
       state.profile.schedule = data.schedule
     },
-
     setActiveWorkout(state, workout) {
       state.activeWorkout = workout
     },
-
     setExercises(state, exercises) {
       state.exercises = exercises
     },
@@ -76,22 +77,38 @@ export default new Vuex.Store({
       try {
         let res = await api.get("profile");
         commit("setProfile", res.data);
+        commit("setStats", res.data.stats)
       } catch (error) {
         console.error(error);
       }
     },
-    async getStats({ commit }) {
-      try {
-        let res = await api.get("profile");
-        commit('setStats', res.data.stats)
-      } catch (error) {
-        console.error(error);
-      }
-    },
+    // async getStats({ commit }) {
+    //   try {
+    //     let res = await api.get("profile");
+    //     commit('setStats', res.data.stats)
+    //   } catch (error) {
+    //     console.error(error);
+    //   }
+    // },
     setActiveStat({ commit }, statObj ) {
       commit("setActiveStat", statObj)
     },
-
+    async getStats({commit}) {
+      try {
+        let res = await api.get("profile")
+        commit("setStats", res.data.stats)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    async saveStats({commit}, completedStats) {
+      let profileId = this.state.profile._id
+      try {
+        let res = await api.post(`profile/${profileId}/stats`, completedStats)
+      } catch (error) {
+        console.error(error)
+      }
+    },
     async getWorkouts({ commit }) {
       try {
         let res = await api.get("workouts")

@@ -14,7 +14,7 @@
       </select>
     </div>
     <div class="col-4 my-stats">
-      <p>{{this.exerciseChoice}}</p>
+      <p>{{this.stats}}</p>
       <canvas id="myChart" width="400" height="400"></canvas>
     </div>
   </div>
@@ -30,14 +30,12 @@ export default {
   
   data(){
     return {  
-      charts: false, 
       exerciseChoice: this.$store.state.stats
     }
   },
   computed: {
     stats(){
-      // get the specific stats
-      return this.$store.state.activeStat
+      return this.$store.state.stats
     }
   },
   methods: {

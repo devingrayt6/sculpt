@@ -28,30 +28,33 @@
         </li>
       </ul>
     </div>
+    <completedWorkoutStatsModal v-if="exerciseData" />
   </div>
 </template>
 
 <script>
+import completedWorkoutStatsModal from "../components/CompletedWorkoutStatsModal"
 export default {
   name: "CurrentWorkout",
   computed: {
     workout() {
-      return this.$store.state.activeWorkout;
+      return this.$store.state.wod
     },
     exerciseData() {
-      return this.$store.state.activeWorkout.exerciseData;
+      return this.$store.state.wod.exerciseData;
     }
   },
   methods: {
-    completeWorkout() {
-      this.$store.dispatch("saveStats", workout);
-    }
   },
   data() {
     return {
-      selected: {}
+      selected: {},
+      finishWorkout: true
     };
-  }
+  },
+  components: {
+    completedWorkoutStatsModal
+    }
 };
 </script>
 

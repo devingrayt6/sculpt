@@ -44,6 +44,21 @@ function sanitizeBody(body) {
 }
 
 class ProfileService {
+  async updateStats(userInfo, body) {
+    let profile = await dbContext.Profile.findOne({
+      email: { $in: userInfo.email }
+    })
+    let stats = profile.stats
+    for (let prop in body) {
+      if(stats[prop]) {
+        if(stats[prop].length > 9){
+          stats[prop].shift()}
+      stats[prop].push(parseInt(body[prop]))
+      }
+    }
+    await profile.save();
+    return profile
+  }
   /**
    * Provided an array of user emails will return an array of user profiles with email picture and name
    * @param {String[]} emails Array of email addresses to lookup users by

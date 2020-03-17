@@ -5,30 +5,30 @@ const ObjId = mongoose.SchemaTypes.ObjectId
 
   // NOTE If you wish to add additional public properties for Schedules do so here
 
+
+// const stat = new Schema({
+//   value: {type: Number},
+//   date: {type: Date, default: Date.now()}
+// })
+
+const stats = new Schema({
+  bench: [{type: Number}],
+  deadLift: [{type: Number}],
+  pullUp : [{type: Number}],
+  squat: [{type: Number}],
+  sitUp: [{type: Number}],
+  pushUp: [{type: Number}],
+  time: [{type: Number}]
+})
+
+
 const Profile = new Schema(
   {
     subs: [{ type: String, unique: true }],
     email: { type: String, lowercase: true, unique: true },
     name: { type: String, required: true },
     picture: { type: String },
-    stats: {
-      "bench": 0,
-      "deadLift": 0,
-      "pullUp" : 0,
-      "squat": 0,
-      "sitUp": 0,
-      "pushUp": 0,
-      "run": 0
-    },
-    completedExerciseStats: {
-      "bench": 0,
-      "deadLift": 0,
-      "pullUp" : 0,
-      "squat": 0,
-      "sitUp": 0,
-      "pushUp": 0,
-      "run": 0
-    },
+    stats: stats,
     schedule: {
       "Sunday": {},
       "Monday": {},
