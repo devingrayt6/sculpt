@@ -11,6 +11,7 @@ export class ProfilesController extends BaseController {
     this.router
       .use(auth0Provider.getAuthorizedUserInfo)
       .get("", this.getUserProfile)
+      .post("/:id/stats", this.updateStats)
       .put("/:id", this.edit)
   }
 
@@ -23,6 +24,15 @@ export class ProfilesController extends BaseController {
     }
   }
 
+  async updateStats(req,res,next) {
+    try {
+      let stats = await profilesService.updateStats(req.userInfo, req.body)
+      res.send(stats)
+    } catch (error) {
+      console.error(error)
+      next(error)
+    }
+  }
   async edit(req, res, next) {
     try {
       req.body.creatorId = req.user.sub;
