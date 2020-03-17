@@ -8,7 +8,7 @@
       >{{this.workout.title}}</h2>
     </div>
     <div class="row">
-      <h4 class="col-12 title text-center">Exercises:</h4>
+      <h4 class="col-12 title text-center" v-if="this.workout.title">Exercises:</h4>
     </div>
     <ul class="list-group">
       <exercise

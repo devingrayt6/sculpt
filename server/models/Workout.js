@@ -13,7 +13,7 @@ const ExerciseData = {
 
 const Workout = new Schema(
   {
-    title: { type: String, unique: true },
+    title: { type: String },
     type: { type: String },
     exerciseData: [ExerciseData],
     creatorEmail: { type: String, required: true },
