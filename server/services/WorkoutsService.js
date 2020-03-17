@@ -29,6 +29,16 @@ class WorkoutsService {
     return data;
   }
 
+  async editExercise(id, userEmail, update) {
+    let data = await dbContext.Workout.findOne({ _id: id, creatorEmail: userEmail })
+    let thisExercise = data.exerciseData.find(e => e._id == update.exerciseId)
+    let change = update.update
+    for (let prop in change) {
+      thisExercise[prop] = change[prop]
+    }
+    await data.save()
+    return "updated"
+  }
   async delete(id, userEmail) {
     let data = await dbContext.Workout.findOneAndRemove({ _id: id, creatorEmail: userEmail });
     if (!data) {
@@ -42,7 +52,8 @@ class WorkoutsService {
 
 
   async deleteExercise(id, exerciseId) {
-    return await dbContext.Workout.findOneAndUpdate({ _id: id }, { $pull: { exerciseData: { _id: exerciseId } } }, { new: true })
+    let data = await dbContext.Workout.findOneAndUpdate({ _id: id }, { $pull: { exerciseData: { _id: exerciseId } } }, { new: true })
+    return data
   }
 }
 

@@ -18,8 +18,9 @@ export class WorkoutsController extends BaseController {
       .post('', this.create)
       .post('/:id/exercise', this.addExercise)
       .put('/:id', this.edit)
+      .put('/:id/editExercise', this.editExercise)
+      .put('/:id/exercise', this.deleteExercise)
       .delete('/:id', this.delete)
-      .delete('/:id/exercise', this.deleteExercise)
   }
 
 
@@ -65,6 +66,15 @@ export class WorkoutsController extends BaseController {
     } catch (error) { next(error) }
   }
 
+  async editExercise(req, res, next) {
+    try {
+      let data = await workoutsService.editExercise(req.params.id, req.userInfo.email, req.body)
+      return res.send(data)
+    } catch (error) {
+      next(error)
+    }
+  }
+
   async delete(req, res, next) {
     try {
       await workoutsService.delete(req.params.id, req.userInfo.email)
@@ -83,7 +93,7 @@ export class WorkoutsController extends BaseController {
 
   async deleteExercise(req, res, next) {
     try {
-      let exercise = await workoutsService.deleteExercise(req.params.id, req.params.exerciseId)
+      let exercise = await workoutsService.deleteExercise(req.params.id, req.body)
       return res.send("exercise deleted")
     } catch (error) {
       next(error)

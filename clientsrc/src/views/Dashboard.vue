@@ -6,26 +6,111 @@
     <div class="row">
       <div class="offset-1 col-10 offset-1">
         <h2 class="overlay">Todays Workout</h2>
-        <todays-workout :workoutData="getWod" />
+        <router-link
+          to="/currentworkout"
+          v-if="selectedDay==dayOfWeek"
+          @click="setActiveWorkout(this.$store.state.profile.schedule[this.selectedDay])"
+        >
+          <todays-workout :workoutData="getWod" />
+        </router-link>
+        <router-link
+          @click="setActiveWorkout(this.$store.state.profile.schedule[this.selectedDay])"
+          to="/myworkouts"
+          v-else
+        >
+          <todays-workout :workoutData="getWod" />
+        </router-link>
+        <button
+          v-if="this.$store.state.profile.schedule[selectedDay]"
+          @click="editWod"
+        >change workout</button>
       </div>
     </div>
 
     <div class="calendar" id="calendar">
-      <p @click="setWod('Sunday')">Sun</p>
-      <p @click="setWod('Monday')">Mon</p>
-      <p @click="setWod('Tuesday')">Tue</p>
-      <p @click="setWod('Wednesday')">Wed</p>
-      <p @click="setWod('Thursday')">Thu</p>
-      <p @click="setWod('Friday')">Fri</p>
-      <p @click="setWod('Saturday')">Sat</p>
+      <div class="text-center">
+        <p @click="setWod('Sunday')">Sun</p>
+      </div>
+      <div class="text-center">
+        <p @click="setWod('Monday')">Mon</p>
+      </div>
+      <div class="text-center">
+        <p @click="setWod('Tuesday')">Tue</p>
+      </div>
+      <div class="text-center">
+        <p @click="setWod('Wednesday')">Wed</p>
+      </div>
+      <div class="text-center">
+        <p @click="setWod('Thursday')">Thu</p>
+      </div>
+      <div class="text-center">
+        <p @click="setWod('Friday')">Fri</p>
+      </div>
+      <div class="text-center">
+        <p @click="setWod('Saturday')">Sat</p>
+      </div>
     </div>
 
-    <div v-if="toggleWorkouts">
-      <li
-        @click="setDayWorkout(workout)"
-        v-for="workout in workouts"
-        :key="workout._id"
-      >{{workout.title}}</li>
+    <div class="icons" id="icons">
+      <div class="text-center" v-if="this.$store.state.profile.schedule[`Sunday`]">
+        <i class="fas fa-dumbbell"></i>
+      </div>
+      <div class="text-center" v-else>
+        <i class="fas fa-bed"></i>
+      </div>
+      <div class="text-center" v-if="this.$store.state.profile.schedule[`Monday`]">
+        <i class="fas fa-dumbbell"></i>
+      </div>
+      <div class="text-center" v-else>
+        <i class="fas fa-bed"></i>
+      </div>
+      <div class="text-center" v-if="this.$store.state.profile.schedule[`Tuesday`]">
+        <i class="fas fa-dumbbell"></i>
+      </div>
+      <div class="text-center" v-else>
+        <i class="fas fa-bed"></i>
+      </div>
+      <div class="text-center" v-if="this.$store.state.profile.schedule[`Wednesday`]">
+        <i class="fas fa-dumbbell"></i>
+      </div>
+      <div class="text-center" v-else>
+        <i class="fas fa-bed"></i>
+      </div>
+      <div class="text-center" v-if="this.$store.state.profile.schedule[`Thursday`]">
+        <i class="fas fa-dumbbell"></i>
+      </div>
+      <div class="text-center" v-else>
+        <i class="fas fa-bed"></i>
+      </div>
+      <div class="text-center" v-if="this.$store.state.profile.schedule[`Friday`]">
+        <i class="fas fa-dumbbell"></i>
+      </div>
+      <div class="text-center" v-else>
+        <i class="fas fa-bed"></i>
+      </div>
+      <div class="text-center" v-if="this.$store.state.profile.schedule[`Saturday`]">
+        <i class="fas fa-dumbbell"></i>
+      </div>
+      <div class="text-center" v-else>
+        <i class="fas fa-bed"></i>
+      </div>
+    </div>
+
+    <div class="toggled-workouts my-3" v-if="toggleWorkouts">
+      <div class="card" style="width: 18rem;">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item bg-dark text-white mb-1" @click="setDayWorkout(`rest`)">
+            Rest Day
+            <i class="fas fa-bed"></i>
+          </li>
+          <li
+            class="list-group-item bg-dark text-white mb-1"
+            @click="setDayWorkout(workout)"
+            v-for="workout in workouts"
+            :key="workout._id"
+          >{{workout.title}}</li>
+        </ul>
+      </div>
     </div>
 
     <div class="row">
@@ -107,14 +192,21 @@ export default {
     setWod(day) {
       if (this.$store.state.profile.schedule[day]) {
         this.$store.commit("setWod", day);
+        this.toggleWorkouts = false;
       } else {
-        this.toggleWorkouts = !this.toggleWorkouts;
+        this.toggleWorkouts = true;
       }
       this.selectedDay = day;
-      console.log(this.selectedDay);
+    },
+
+    editWod() {
+      this.toggleWorkouts = true;
     },
 
     setDayWorkout(workout) {
+      if (workout == "rest") {
+        workout = "";
+      }
       let newSchedule = this.$store.state.profile.schedule;
       newSchedule[this.selectedDay] = workout;
       let data = {
@@ -122,6 +214,7 @@ export default {
         profileId: this.$store.state.profile.id
       };
       this.$store.dispatch("setDayWorkout", data);
+      this.toggleWorkouts = false;
     },
 
     setActiveWorkout(workout) {
@@ -166,10 +259,24 @@ export default {
   flex-direction: row;
   justify-content: space-evenly;
   margin-top: 2.5rem;
-  margin-bottom: 1.5rem;
 }
 .calendar p {
   color: rgb(124, 121, 121);
+  font-size: 14px;
+}
+.calendar div {
+  width: 1rem;
+}
+.icons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+.icons i {
+  font-size: 14px;
+}
+.icons div {
+  width: 1rem;
 }
 .stats {
   bottom: 0;
@@ -188,5 +295,9 @@ export default {
   font-size: 18px;
   margin-top: 0.75rem;
   margin-bottom: 0.75rem;
+}
+.toggled-workouts {
+  height: 15rem;
+  overflow-y: auto;
 }
 </style>

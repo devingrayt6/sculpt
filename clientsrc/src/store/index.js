@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import Axios from "axios";
 import router from "../router";
 import { STATES } from "mongoose";
+import Exercise from "../../../server/models/Exercises";
 
 Vue.use(Vuex);
 
@@ -19,7 +20,7 @@ let api = Axios.create({
 export default new Vuex.Store({
   state: {
     profile: {},
-    activeWorkout: {},
+    activeWorkout: { exercises: [] },
     workouts: [],
     exercises: [],
     stats: [],
@@ -33,10 +34,11 @@ export default new Vuex.Store({
     setStats(state, stats) {
       state.stats = stats
     },
+ features/CompletedWorkoutModal
     // saveStats(state, updateStats) {
     //   state.stats = updateStats
     // },
-    setActiveStat(state, statObj){
+    setActiveStat(state, statObj) {
       let activeStat = state.stats[statObj].filter(el => el.stats != statObj)
       state.activeStat = activeStat
     },
@@ -58,11 +60,22 @@ export default new Vuex.Store({
     createWorkout(state, workout) {
       state.workouts.push(workout);
     },
+    deleteWorkout(state, workoutId) {
+      state.workouts = state.workouts.filter(w => w._id != workoutId)
+    },
     createExercise(state, exercise) {
       state.exercises.push(exercise);
     },
+    deleteExercise(state, exerciseId) {
+      state.exercises = state.exercises.filter(e => e._id != exerciseId)
+    },
     addExerciseToWorkout(state, data) {
       state.activeWorkout.exerciseData.push(data)
+    },
+    deleteExerciseFromWorkout(state, data) {
+      // let exercise = state.activeWorkout.exerciseData.find(e => e._id = data.id)
+      let exercises = state.activeWorkout.exerciseData.filter(e => e._id != data._id)
+      state.activeWorkout.exerciseData = exercises
     }
   },
 
@@ -99,7 +112,9 @@ export default new Vuex.Store({
         let res = await api.post(`profile/${profileId}/stats`, completedStats)
       } catch (error) {
         console.error(error)
-      }
+      },
+    setActiveStat({ commit }, statObj) {
+      commit("setActiveStat", statObj)
     },
     async getWorkouts({ commit }) {
       try {
@@ -124,12 +139,33 @@ export default new Vuex.Store({
       }
     },
 
+    async createWorkout({ commit }, workout) {
+      try {
+        let res = await api.post('workouts', workout);
+        commit('createWorkout', res.data)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+
     async setActiveWorkout({ commit }, workout) {
       try {
-        commit('setActiveWorkout', workout)
+        let res = await api.get(`workouts/${workout.id}`)
+        commit('setActiveWorkout', res.data)
       } catch (error) {
         console.error(error);
 
+      }
+    },
+
+    async deleteWorkout({ commit }, workoutId) {
+      try {
+        let res = await api.delete(`workouts/${workoutId}`)
+        commit('deleteWorkout', workoutId)
+        let newWorkout = {}
+        commit('setActiveWorkout', newWorkout)
+      } catch (error) {
+        console.error(error);
       }
     },
 
@@ -141,28 +177,64 @@ export default new Vuex.Store({
         console.error(error);
       }
     },
-    async createWorkout({ commit }, workout) {
-      try {
-        let res = await api.post('workouts', workout);
-        commit('createWorkout', res.data)
-      } catch (error) {
-        console.error(error)
-      }
-    },
-    async createExercise({ commit }, exercise) {
+    async createExercise({ commit, dispatch }, exercise) {
       try {
         let res = await api.post('exercises', exercise);
         commit('createExercise', exercise);
+        dispatch('getExercises')
       } catch (error) {
         console.error(error)
       }
     },
+
+    async deleteExercise({ commit }, exerciseId) {
+      try {
+        let res = await api.delete(`exercises/${exerciseId}`)
+        commit('deleteExercise', exerciseId)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    async editExercise({ commit }, data) {
+      try {
+        let res = await api.put(`exercises/${data.exerciseId}`, data.update)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+
+    async editWorkoutExercise({ commit }, data) {
+      try {
+        let res = await api.put(`workouts/${data.workoutId}/editExercise`, data)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    async editWorkout({ commit }, data) {
+      try {
+        let res = await api.put(`workouts/${data.workoutId}`, data.update)
+        commit('setActiveWorkout', res.data)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+
     async addExerciseToWorkout({ commit }, data) {
       try {
         let res = await api.post(`workouts/${data.workoutId}/exercise`, data.body)
         commit('addExerciseToWorkout', data.body)
       } catch (error) {
         console.error(error)
+      }
+    },
+
+    async deleteExerciseFromWorkout({ commit }, data) {
+      let workoutId = this.state.activeWorkout._id
+      try {
+        let res = await api.put(`workouts/${workoutId}/exercise`, data)
+        commit('deleteExerciseFromWorkout', data)
+      } catch (error) {
+        console.error(error);
       }
     }
   }

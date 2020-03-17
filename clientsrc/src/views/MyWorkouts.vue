@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid workout-container">
     <div class="row text-center">
-      <div class="col-12 h2">My Workouts</div>
+      <div class="col-12 h2 pt-2">My Workouts</div>
     </div>
     <div class="snap-container">
       <div class="row workout-row">
@@ -91,7 +91,7 @@ export default {
 .workout-container {
   max-width: 100vw;
   min-height: 100vh;
-  background-color: rgba(59, 57, 57, 0.719);
+  background-color: white;
 }
 .title {
   color: rgb(29, 172, 255);
