@@ -58,7 +58,7 @@ export default new Vuex.Store({
     createWorkout(state, workout) {
       state.workouts.push(workout);
     },
-    deleteWorkouts(state, workoutId) {
+    deleteWorkout(state, workoutId) {
       state.workouts = state.workouts.filter(w => w._id != workoutId)
     },
     createExercise(state, exercise) {
@@ -72,10 +72,8 @@ export default new Vuex.Store({
     },
     deleteExerciseFromWorkout(state, data) {
       // let exercise = state.activeWorkout.exerciseData.find(e => e._id = data.id)
-      console.log(state.activeWorkout.exerciseData)
       let exercises = state.activeWorkout.exerciseData.filter(e => e._id != data._id)
       state.activeWorkout.exerciseData = exercises
-      console.log(state.activeWorkout.exerciseData)
     }
   },
 
@@ -140,7 +138,8 @@ export default new Vuex.Store({
 
     async setActiveWorkout({ commit }, workout) {
       try {
-        commit('setActiveWorkout', workout)
+        let res = await api.get(`workouts/${workout.id}`)
+        commit('setActiveWorkout', res.data)
       } catch (error) {
         console.error(error);
 
@@ -151,6 +150,8 @@ export default new Vuex.Store({
       try {
         let res = await api.delete(`workouts/${workoutId}`)
         commit('deleteWorkout', workoutId)
+        let newWorkout = {}
+        commit('setActiveWorkout', newWorkout)
       } catch (error) {
         console.error(error);
       }
@@ -179,7 +180,30 @@ export default new Vuex.Store({
         let res = await api.delete(`exercises/${exerciseId}`)
         commit('deleteExercise', exerciseId)
       } catch (error) {
+        console.error(error)
+      }
+    },
+    async editExercise({ commit }, data) {
+      try {
+        let res = await api.put(`exercises/${data.exerciseId}`, data.update)
+      } catch (error) {
+        console.error(error)
+      }
+    },
 
+    async editWorkoutExercise({ commit }, data) {
+      try {
+        let res = await api.put(`workouts/${data.workoutId}/editExercise`, data)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    async editWorkout({ commit }, data) {
+      try {
+        let res = await api.put(`workouts/${data.workoutId}`, data.update)
+        commit('setActiveWorkout', res.data)
+      } catch (error) {
+        console.error(error)
       }
     },
 
