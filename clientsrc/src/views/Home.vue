@@ -4,14 +4,34 @@
       <video autoplay muted loop id="myVideo">
         <source src="../../public/Boxing-gym.mp4" type="video/mp4" />
       </video>
-      <button class="btn btn-secondary">Sign up</button>
+      <div>
+        <button v-if="!$auth.isAuthenticated" @click="login" class="btn btn-secondary">Login</button>
+        <button v-else @click="logout" class="btn btn-secondary">Logout</button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { getUserData } from "@bcwdev/auth0-vue";
+
 export default {
-  name: "home"
+  name: "home",
+  methods: {
+    async login() {
+      await this.$auth.loginWithPopup();
+      this.$store.dispatch("setBearer", this.$auth.bearer);
+      console.log("this.$auth.user: ");
+      console.log(this.$auth.user);
+      this.$store.dispatch("getProfile");
+      this.$router.push({ name: "Dashboard" });
+    },
+    async logout() {
+      this.$store.dispatch("resetBearer");
+      await this.$auth.logout({ returnTo: window.location.origin });
+      this.$router.push({ name: "Home" });
+    }
+  }
 };
 </script>
 
