@@ -90,6 +90,7 @@ export default {
   methods: {
     createExercise() {
       this.$store.dispatch("createExercise", this.newExercise);
+      this.$emit("clicked");
       $("#newExerciseForm").remove();
       this.newForm = false;
     }

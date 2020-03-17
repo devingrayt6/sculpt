@@ -6,6 +6,7 @@
     <NewExerciseForm
       class="list-group-item listItem row p-2 m-2 text-center bg-dark text-white"
       v-if="newExerciseForm"
+      v-on:clicked="toggleButton"
     />
     <div class="button-row">
       <button
@@ -53,7 +54,11 @@ export default {
     NewExerciseForm,
     Exercise
   },
-  methods: {}
+  methods: {
+    toggleButton() {
+      this.newExerciseForm = false;
+    }
+  }
 };
 </script>
 
