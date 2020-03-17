@@ -28,19 +28,15 @@ export default new Vuex.Store({
     wod: {},
   },
   mutations: {
+    setActiveStat(state, statObj) {
+      let activeStat = state.stats[statObj].filter(el => el.stats != statObj)
+      state.activeStat = activeStat
+    },
     setProfile(state, profile) {
       state.profile = profile;
     },
     setStats(state, stats) {
       state.stats = stats
-    },
- features/CompletedWorkoutModal
-    // saveStats(state, updateStats) {
-    //   state.stats = updateStats
-    // },
-    setActiveStat(state, statObj) {
-      let activeStat = state.stats[statObj].filter(el => el.stats != statObj)
-      state.activeStat = activeStat
     },
     setWod(state, day) {
       state.wod = state.profile.schedule[day]
@@ -95,10 +91,11 @@ export default new Vuex.Store({
         console.error(error);
       }
     },
-    setActiveStat({ commit }, statObj ) {
+
+    setActiveStat({ commit }, statObj) {
       commit("setActiveStat", statObj)
     },
-    async getStats({commit}) {
+    async getStats({ commit }) {
       try {
         let res = await api.get("profile")
         commit("setStats", res.data.stats)
@@ -106,16 +103,15 @@ export default new Vuex.Store({
         console.error(error)
       }
     },
-    async saveStats({commit}, completedStats) {
+    async saveStats({ commit }, completedStats) {
       let profileId = this.state.profile._id
       try {
         let res = await api.post(`profile/${profileId}/stats`, completedStats)
       } catch (error) {
         console.error(error)
-      },
-    setActiveStat({ commit }, statObj) {
-      commit("setActiveStat", statObj)
+      }
     },
+
     async getWorkouts({ commit }) {
       try {
         let res = await api.get("workouts")
