@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid exercise-container">
     <div class="row text-center">
-      <div class="col-12 h2">My Exercises</div>
+      <div class="col-12 h2 pt-2">My Exercises</div>
     </div>
     <NewExerciseForm
       class="list-group-item listItem row p-2 m-2 text-center bg-dark text-white"
@@ -38,6 +38,7 @@ export default {
   name: "MyExercises",
   mounted() {
     this.$store.dispatch("getExercises");
+    this.$store.dispatch("setActiveWorkout", {});
   },
   data() {
     return {
@@ -68,7 +69,7 @@ export default {
 .exercise-container {
   max-width: 100vw;
   min-height: 100vh;
-  background-color: rgba(59, 57, 57, 0.719);
+  background-color: white;
 }
 .button-row {
   display: flex;

@@ -24,6 +24,11 @@ export default {
 .workout {
   height: 200px;
   width: 300px;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .title {
   background-color: rgba(0, 0, 0, 0.575);

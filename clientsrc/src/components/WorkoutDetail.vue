@@ -11,38 +11,12 @@
       <h4 class="col-12 title text-center">Exercises:</h4>
     </div>
     <ul class="list-group">
-      <li
-        class="list-group-item listItem row p-2 m-2"
+      <exercise
+        class="list-group-item listItem row p-2 m-2 text-center"
         v-for="(exerciseObj) in exerciseData"
         :key="exerciseObj._id"
-      >
-        <div class="title-row col-12">
-          <h5>
-            <u contenteditable @blur="onEdit('title')">{{exerciseObj.title}}</u>
-          </h5>
-          <p @click="deleteExercise(exerciseObj)" class="deletebutton text-danger">X</p>
-        </div>
-        <p class="col-12" v-show="exerciseObj.sets">
-          Sets-
-          <span contenteditable @blur="onEdit('sets')">{{exerciseObj.sets}}</span>
-        </p>
-        <p class="col-12" v-show="exerciseObj.reps">
-          Reps-
-          <span contenteditable @blur="onEdit('reps')">{{exerciseObj.reps}}</span>
-        </p>
-        <p class="col-12" v-show="exerciseObj.weight">
-          Weight-
-          <span contenteditable @blur="onEdit('weight')">{{exerciseObj.weight}}</span>
-        </p>
-        <p class="col-12" v-show="exerciseObj.distance">
-          Distance-
-          <span contenteditable @blur="onEdit('distance')">{{exerciseObj.distance}}</span>
-        </p>
-        <p class="col-12" v-show="exerciseObj.time">
-          Time-
-          <span contenteditable @blur="onEdit('time')">{{exerciseObj.time}}</span>
-        </p>
-      </li>
+        :exerciseData="exerciseObj"
+      />
       <div v-if="newExerciseForm">
         <select
           class="custom-select"
@@ -75,6 +49,8 @@
 </template>
 
 <script>
+import Exercise from "../components/Exercise";
+
 export default {
   name: "WorkoutDetail",
   props: ["workoutData"],
@@ -109,50 +85,11 @@ export default {
       let id = this.$store.state.activeWorkout._id;
       this.$store.dispatch("deleteWorkout", id);
     },
-    onEdit(where) {
-      let id = this.$store.state.activeWorkout._id;
-      if (where == "reps") {
-        let data = { reps: event.target.innerText * 1 };
-        console.log(data);
-        this.$store.dispatch("editWorkoutExercise", {
-          update: data,
-          workoutId: id
-        });
-      } else if (where == "sets") {
-        let data = { sets: event.target.innerText * 1 };
-        console.log(data);
-        this.$store.dispatch("editWorkoutExercise", {
-          update: data,
-          workoutId: id
-        });
-      } else if (where == "weight") {
-        let data = { weight: event.target.innerText * 1 };
-        console.log(data);
-        this.$store.dispatch("editWorkoutExercise", {
-          update: data,
-          workoutId: id
-        });
-      } else if (where == "distance") {
-        let data = { distance: event.target.innerText * 1 };
-        console.log(data);
-        this.$store.dispatch("editWorkoutExercise", {
-          update: data,
-          workoutId: id
-        });
-      } else if (where == "time") {
-        let data = { time: event.target.innerText * 1 };
-        console.log(data);
-        this.$store.dispatch("editWorkoutExercise", {
-          update: data,
-          workoutId: id
-        });
-      }
-    },
     onEditWorkout(where) {
       let id = this.$store.state.activeWorkout._id;
-      let data = { title: event.target.innerText, workoutId: id };
+      let data = { title: event.target.innerText };
       console.log(data);
-      this.$store.dispatch("editWorkout", data);
+      this.$store.dispatch("editWorkout", { update: data, workoutId: id });
     }
   },
   data() {
@@ -164,6 +101,9 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getExercises");
+  },
+  components: {
+    Exercise
   }
 };
 </script>
