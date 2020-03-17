@@ -14,7 +14,7 @@
       Reps-
       <span contenteditable @blur="onEdit('reps', exerciseData._id)">{{exerciseData.reps}}</span>
     </p>
-    <p class="col-12" v-show="exerciseData.weight">
+    <p class="col-12">
       Weight-
       <span
         contenteditable
