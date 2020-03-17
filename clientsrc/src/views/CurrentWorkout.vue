@@ -23,6 +23,13 @@
           <p>Set: {{n}}</p>
           <p v-show="exerciseObj.reps">Reps-{{exerciseObj.reps}}</p>
           <p v-show="exerciseObj.weights">Weight-{{exerciseObj.weights}}</p>
+        </li>
+      </ul>
+      <ul class="col-12 collapse" :id="'target'+exerciseObj._id" v-if="!exerciseObj.sets">
+        <li class="listItem row">
+          <p>
+            <input class="form-check-input position-static" type="checkbox" />
+          </p>
           <p v-show="exerciseObj.distance">Distance-{{exerciseObj.distance}}</p>
           <p v-show="exerciseObj.time">Time-{{exerciseObj.time}}</p>
         </li>
@@ -33,7 +40,7 @@
 </template>
 
 <script>
-import completedWorkoutStatsModal from "../components/CompletedWorkoutStatsModal"
+import completedWorkoutStatsModal from "../components/CompletedWorkoutStatsModal";
 export default {
   name: "CurrentWorkout",
   mounted() {
@@ -41,14 +48,13 @@ export default {
   },
   computed: {
     workout() {
-      return this.$store.state.wod
+      return this.$store.state.wod;
     },
     exerciseData() {
       return this.$store.state.wod.exerciseData;
     }
   },
-  methods: {
-  },
+  methods: {},
   data() {
     return {
       selected: {},
@@ -57,7 +63,7 @@ export default {
   },
   components: {
     completedWorkoutStatsModal
-    }
+  }
 };
 </script>
 
