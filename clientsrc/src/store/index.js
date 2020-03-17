@@ -138,7 +138,8 @@ export default new Vuex.Store({
 
     async setActiveWorkout({ commit }, workout) {
       try {
-        commit('setActiveWorkout', workout)
+        let res = await api.get(`workouts/${workout.id}`)
+        commit('setActiveWorkout', res.data)
       } catch (error) {
         console.error(error);
 
