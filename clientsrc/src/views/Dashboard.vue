@@ -6,7 +6,7 @@
     <div class="row">
       <div class="offset-1 col-10 offset-1">
         <div class="current-wod text-center">
-          <router-link
+          <!-- <router-link
             to="/currentworkout"
             v-if="selectedDay==dayOfWeek"
             @click="setActiveWorkout(this.$store.state.profile.schedule[this.selectedDay])"
@@ -19,41 +19,73 @@
             v-else
           >
             <todays-workout :workoutData="getWod" class="today-workout" />
-          </router-link>
-          <button
+          </router-link>-->
+          <!-- <button
             class="btn btn-success change-workout text-center"
             v-if="this.$store.state.profile.schedule[selectedDay]"
             @click="editWod"
-          >change workout</button>
+          >change workout</button>-->
         </div>
       </div>
     </div>
-
+    <div class="row schedule-row p-2 bg-primary">
+      <workout v-if="this.activeWorkout" :workoutData="activeWorkout" />
+      <button
+        @click="toggleWorkouts = !toggleWorkouts"
+        v-if="this.workouts.length>0"
+        class="btn btn-secondary"
+      >
+        Set Schedule for
+        <span>{{this.activeDay}}</span>
+      </button>
+      <router-link
+        to="/myWorkouts"
+        v-if="this.workouts.length==0"
+        class="btn btn-primary"
+      >Create Workouts</router-link>
+    </div>
+    <div class="row schedule-row p-2 bg-primary" v-if="toggleWorkouts">
+      <div class="col-10">
+        <select
+          class="form-control"
+          :id="this.selectedDay"
+          @change.prevent="updateSchedule"
+          v-model="selected"
+        >
+          <option value="rest day">Rest Day</option>
+          <option
+            v-for="workoutObj in workouts"
+            :key="workoutObj._id"
+            :value="workoutObj"
+          >{{workoutObj.title}}</option>
+        </select>
+      </div>
+    </div>
     <div class="calendar" id="calendar">
       <div class="text-center">
-        <p @click="setWod('Sunday')">Sun</p>
+        <p @click="setActiveDay('sunday')">Sun</p>
       </div>
       <div class="text-center">
-        <p @click="setWod('Monday')">Mon</p>
+        <p @click="setActiveDay('monday')">Mon</p>
       </div>
       <div class="text-center">
-        <p @click="setWod('Tuesday')">Tue</p>
+        <p @click="setActiveDay('tuesday')">Tue</p>
       </div>
       <div class="text-center">
-        <p @click="setWod('Wednesday')">Wed</p>
+        <p @click="setActiveDay('wednesday')">Wed</p>
       </div>
       <div class="text-center">
-        <p @click="setWod('Thursday')">Thu</p>
+        <p @click="setActiveDay('thursday')">Thu</p>
       </div>
       <div class="text-center">
-        <p @click="setWod('Friday')">Fri</p>
+        <p @click="setActiveDay('friday')">Fri</p>
       </div>
       <div class="text-center">
-        <p @click="setWod('Saturday')">Sat</p>
+        <p @click="setActiveDay('saturday')">Sat</p>
       </div>
     </div>
 
-    <div class="icons" id="icons">
+    <!-- <div class="icons" id="icons">
       <div class="text-center" v-if="this.$store.state.profile.schedule[`Sunday`]">
         <i class="fas fa-dumbbell" @click="setWod('Sunday')"></i>
       </div>
@@ -74,11 +106,11 @@
       </div>
       <div class="text-center" v-if="this.$store.state.profile.schedule[`Wednesday`]">
         <i class="fas fa-dumbbell" @click="setWod('Wednesday')"></i>
-      </div>
-      <div class="text-center" v-else>
+    </div>-->
+    <!-- <div class="text-center" v-else>
         <i class="fas fa-bed" @click="setWod('Wednesday')"></i>
-      </div>
-      <div class="text-center" v-if="this.$store.state.profile.schedule[`Thursday`]">
+    </div>-->
+    <!-- <div class="text-center" v-if="this.$store.state.profile.schedule[`Thursday`]">
         <i class="fas fa-dumbbell" @click="setWod('Thursday')"></i>
       </div>
       <div class="text-center" v-else>
@@ -96,9 +128,9 @@
       <div class="text-center" v-else>
         <i class="fas fa-bed" @click="setWod('Saturday')"></i>
       </div>
-    </div>
+    </div>-->
 
-    <div class="toggled-workouts my-3" v-if="toggleWorkouts">
+    <!-- <div class="toggled-workouts my-3" v-if="toggleWorkouts">
       <div class="card" style="width: 18rem;">
         <ul class="list-group list-group-flush">
           <li class="list-group-item bg-dark text-white mb-1" @click="setDayWorkout(`rest`)">
@@ -113,7 +145,7 @@
           >{{workout.title}}</li>
         </ul>
       </div>
-    </div>
+    </div>-->
 
     <div class="row">
       <div class="stats col-12">
@@ -153,7 +185,7 @@
 </template>
 
 <script>
-import todaysWorkout from "../components/Workout";
+import Workout from "../components/Workout";
 let weekDays = {
   "0": "Sunday",
   "1": "Monday",
@@ -169,8 +201,10 @@ export default {
     {
       this.$store.dispatch("getStats");
       this.$store.dispatch("getWorkouts");
-      this.$store.dispatch("setActiveWorkout");
-      this.selectedDay = this.dayOfWeek;
+      this.selectedDay = this.dayOfWeek.toLowerCase();
+      this.$store.dispatch("setActiveDay", this.selectedDay);
+      this.$store.dispatch("getWorkoutOfDay", this.selectedDay);
+      this.$store.dispatch("buildSchedule");
     }
   },
   computed: {
@@ -183,24 +217,41 @@ export default {
     workouts() {
       return this.$store.state.workouts;
     },
-    getWod() {
-      return this.$store.state.profile.schedule[this.selectedDay];
-    },
+    // getWod() {
+    //   return this.$store.state.profile.schedule[this.selectedDay];
+    // },
     profile() {
       return this.$store.state.profile;
+    },
+    activeWorkout() {
+      return this.$store.state.activeWorkout;
+    },
+    schedule() {
+      return this.$store.state.schedule;
+    },
+    activeDay() {
+      return this.$store.state.activeDay;
     }
   },
   methods: {
-    setWod(day) {
-      if (this.$store.state.profile.schedule[day]) {
-        console.log(day);
-        this.$store.commit("setWod", day);
-        this.toggleWorkouts = false;
+    setActiveDay(day) {
+      this.$store.dispatch("setActiveDay", day);
+      if (this.workouts.length == 0 || this.schedule[day] == undefined) {
+        let workout = "no workouts created yet";
+        console.log(workout);
       } else {
-        this.toggleWorkouts = true;
+        this.$store.dispatch("getWorkoutOfDay", day);
       }
-      this.selectedDay = day;
     },
+    //   if (this.$store.state.profile.schedule[day]) {
+    //     console.log(day);
+    //     this.$store.commit("setWod", day);
+    //     this.toggleWorkouts = false;
+    //   } else {
+    //     this.toggleWorkouts = true;
+    //   }
+    //   this.selectedDay = day;
+    // },
 
     editWod() {
       this.toggleWorkouts = true;
@@ -222,6 +273,12 @@ export default {
 
     setActiveWorkout(workout) {
       this.$store.dispatch("setActiveWorkout", workout);
+    },
+    updateSchedule() {
+      let workout = this.selected;
+      let day = this.selectedDay;
+      this.toggleWorkouts = false;
+      this.$store.dispatch("updateSchedule", { workout: workout, day: day });
     }
   },
   data() {
@@ -235,11 +292,12 @@ export default {
         .join("/")}`,
       dayOfWeek: `${weekDays[new Date().getDay()]}`,
       toggleWorkouts: false,
-      selectedDay: ""
+      selectedDay: "",
+      selected: {}
     };
   },
   components: {
-    todaysWorkout
+    Workout
   }
 };
 </script>
@@ -313,6 +371,9 @@ export default {
   height: 15%;
   padding: 1px;
 }
-.current-wod {
+.schedule-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 </style>

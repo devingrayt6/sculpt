@@ -26,6 +26,8 @@ export default new Vuex.Store({
     stats: [],
     activeStat: {},
     wod: {},
+    activeDay: "",
+    schedule: {},
   },
   mutations: {
     setActiveStat(state, statObj) {
@@ -41,11 +43,17 @@ export default new Vuex.Store({
     setWod(state, day) {
       state.wod = state.profile.schedule[day]
     },
+    setActiveDay(state, day) {
+      state.activeDay = day
+    },
     setWorkouts(state, workouts) {
       state.workouts = workouts
     },
     updateSchedule(state, data) {
       state.profile.schedule = data.schedule
+    },
+    setSchedule(state, { workout, day }) {
+      Vue.set(state.schedule, day, workout)
     },
     setActiveWorkout(state, workout) {
       state.activeWorkout = workout
@@ -103,6 +111,17 @@ export default new Vuex.Store({
         console.error(error)
       }
     },
+
+    getWorkoutOfDay({ commit }, day) {
+      if (this.state.workouts == []) {
+        commit("setActiveWorkout", {})
+        return "no workouts"
+      } else {
+        let workout = this.state.workouts.find(w => w.day.find(d => d == day))
+        commit("setActiveWorkout", workout)
+      }
+    },
+
     async saveStats({ commit }, completedStats) {
       let profileId = this.state.profile._id
       try {
@@ -133,6 +152,23 @@ export default new Vuex.Store({
         console.error(error);
 
       }
+    },
+
+    buildSchedule({ commit }) {
+      let days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+      for (let i = 0; i < days.length; i++) {
+        let day = days[i]
+        let workout = this.state.workouts.find(w => w.day == day)
+        commit("setSchedule", { workout, day })
+      }
+    },
+
+    updateSchedule({ commit }, update) {
+
+    },
+
+    setActiveDay({ commit }, day) {
+      commit('setActiveDay', day)
     },
 
     async createWorkout({ commit }, workout) {
