@@ -20,7 +20,7 @@ export class WorkoutsController extends BaseController {
       .put('/:id', this.edit)
       .put('/:id/editExercise', this.editExercise)
       .delete('/:id', this.delete)
-      .delete('/:id/exercise', this.deleteExercise)
+      .delete('/:workoutId/exercise/:exerciseId', this.deleteExercise)
   }
 
 
@@ -93,7 +93,7 @@ export class WorkoutsController extends BaseController {
 
   async deleteExercise(req, res, next) {
     try {
-      let exercise = await workoutsService.deleteExercise(req.params.id, req.body)
+      await workoutsService.deleteExercise(req.params.workoutId, req.params.exerciseId)
       return res.send("exercise deleted")
     } catch (error) {
       next(error)
