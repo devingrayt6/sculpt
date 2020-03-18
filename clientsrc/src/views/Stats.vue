@@ -1,6 +1,7 @@
 <template>
   <div>
-    <chart v-if="charts" :chartData="charts" />
+    <chart v-if="charts" :statistics="returnStat" />
+    <!-- v-on:chartUpdate="toggleChart" -->
     <div class="col-12 stats-form">
       <label for="statsPage">Type</label>
       <select class="form-control" id="statsPage" @change="toggleStats($event)">
@@ -10,12 +11,11 @@
         <option value="deadLift">Dead Lifts</option>
         <option value="sitUp">Sit Ups</option>
         <option value="pullUp">Pull Ups</option>
-        <option value="run">Run</option>
+        <option value="time">Run</option>
       </select>
     </div>
     <div class="col-4 my-stats">
-      <p>{{this.stats}}</p>
-      <canvas id="myChart" width="400" height="400"></canvas>
+      <canvas id="myChart" width="400" height="400" ></canvas>
     </div>
   </div>
 </template>
@@ -30,19 +30,24 @@ export default {
   
   data(){
     return {  
+      charts: false,
       exerciseChoice: this.$store.state.stats
     }
   },
   computed: {
     stats(){
       return this.$store.state.stats
+    },
+    returnStat(){
+      return this.$store.state.activeStat
     }
   },
   methods: {
     toggleStats(event) {
-      this.charts = true
+      this.charts = false
       let activeStat = event.target.value
       this.$store.dispatch("setActiveStat", activeStat)
+      this.charts = true
     },
   },
   components: {

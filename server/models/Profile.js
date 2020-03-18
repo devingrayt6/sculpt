@@ -12,13 +12,13 @@ const ObjId = mongoose.SchemaTypes.ObjectId
 // })
 
 const stats = new Schema({
-  bench: [{type: Number}],
-  deadLift: [{type: Number}],
-  pullUp : [{type: Number}],
-  squat: [{type: Number}],
-  sitUp: [{type: Number}],
-  pushUp: [{type: Number}],
-  time: [{type: Number}]
+  bench: [{type: Number, default: 0}],
+  pushUp: [{type: Number, default: 0}],
+  squat: [{type: Number, default: 0}],
+  deadLift: [{type: Number, default: 0}],
+  sitUp: [{type: Number, default: 0}],
+  pullUp : [{type: Number, default: 0}],
+  time: [{type: Number, default: 0}]
 })
 
 

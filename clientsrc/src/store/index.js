@@ -29,7 +29,7 @@ export default new Vuex.Store({
   },
   mutations: {
     setActiveStat(state, statObj) {
-      let activeStat = state.stats[statObj].filter(el => el.stats != statObj)
+      let activeStat = state.stats[statObj]
       state.activeStat = activeStat
     },
     setProfile(state, profile) {
