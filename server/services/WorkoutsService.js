@@ -29,6 +29,16 @@ class WorkoutsService {
     return data;
   }
 
+  async addDay(id, userEmail, update) {
+    let data = await dbContext.Workout.findOne({ _id: id, creatorEmail: userEmail })
+    data.day.push(update.day)
+    await data.save()
+    if (!data) {
+      throw new BadRequest("Invalid ID or you do not own this board");
+    }
+    return data;
+  }
+
   async editExercise(id, userEmail, update) {
     let data = await dbContext.Workout.findOne({ _id: id, creatorEmail: userEmail })
     let thisExercise = data.exerciseData.find(e => e._id == update.exerciseId)

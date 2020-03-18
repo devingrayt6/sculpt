@@ -1,5 +1,5 @@
 import Vue from "vue";
-import Vuex from "vuex";
+import Vuex, { Store } from "vuex";
 import Axios from "axios";
 import router from "../router";
 import { STATES } from "mongoose";
@@ -26,6 +26,8 @@ export default new Vuex.Store({
     stats: [],
     activeStat: {},
     wod: {},
+    activeDay: "",
+    schedule: {},
   },
   mutations: {
     setActiveStat(state, statObj) {
@@ -41,11 +43,17 @@ export default new Vuex.Store({
     setWod(state, day) {
       state.wod = state.profile.schedule[day]
     },
+    setActiveDay(state, day) {
+      state.activeDay = day
+    },
     setWorkouts(state, workouts) {
       state.workouts = workouts
     },
-    updateSchedule(state, data) {
-      state.profile.schedule = data.schedule
+    updateSchedule(state, { res, day }) {
+      state.schedule[day] = res.data
+    },
+    setSchedule(state, { workout, day }) {
+      Vue.set(state.schedule, day, workout)
     },
     setActiveWorkout(state, workout) {
       state.activeWorkout = workout
@@ -103,6 +111,21 @@ export default new Vuex.Store({
         console.error(error)
       }
     },
+
+    getWorkoutOfDay({ commit }, day) {
+      if (this.state.workouts.length == 0) {
+        commit("setActiveWorkout", {})
+        return "no workouts"
+      } else {
+        let workout = this.state.workouts.find(w => w.day.find(d => d === day))
+        if (workout == undefined) {
+          commit('setActiveWorkout', {})
+        } else {
+          commit("setActiveWorkout", workout)
+        }
+      }
+    },
+
     async saveStats({ commit }, completedStats) {
       let profileId = this.state.profile._id
       try {
@@ -135,6 +158,42 @@ export default new Vuex.Store({
       }
     },
 
+    async buildSchedule({ commit, dispatch }) {
+      try {
+        let res = await api.get("workouts")
+        let days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+        for (let i = 0; i < days.length; i++) {
+          let day = days[i]
+          let workout = res.data.find(w => w.day.find(d => d == day))
+          if (workout) {
+            commit("setSchedule", { workout, day })
+          } else {
+            commit('setWorkouts', res.data)
+          }
+        }
+        dispatch("getWorkoutOfDay", this.state.activeDay)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+
+    async updateSchedule({ commit }, update) {
+      try {
+        let day = this.state.activeDay
+        let workout = update
+        let res = await api.put(`workouts/${workout.id}/addDay`, { "day": day })
+        commit('updateSchedule', { res, day })
+        commit('setActiveWorkout', res.data)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+
+    setActiveDay({ commit, dispatch }, day) {
+      commit('setActiveDay', day)
+      dispatch('getWorkoutOfDay', day)
+    },
+
     async createWorkout({ commit }, workout) {
       try {
         let res = await api.post('workouts', workout);
@@ -152,6 +211,10 @@ export default new Vuex.Store({
         console.error(error);
 
       }
+    },
+
+    resetActiveWorkout({ commit }, workout) {
+      commit('setActiveWorkout', workout)
     },
 
     async deleteWorkout({ commit }, workoutId) {

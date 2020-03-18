@@ -2,6 +2,14 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 const ObjId = mongoose.Schema.Types.ObjectId
 
+let noWorkout = {
+  _id: "12345",
+  id: "12345",
+  title: "No Workout Set",
+  type: "none",
+  creatorEmail: "admin"
+}
+
 const ExerciseData = {
   title: { type: String },
   reps: { type: Number },
@@ -17,6 +25,7 @@ const Workout = new Schema(
     type: { type: String },
     exerciseData: [ExerciseData],
     creatorEmail: { type: String, required: true },
+    day: [{ type: String, lowercase: true, default: "" }]
     // NOTE If you wish to add additional public properties for Workouts do so here
   },
   { timestamps: true, toJSON: { virtuals: true } })
