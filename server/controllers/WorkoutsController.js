@@ -19,8 +19,8 @@ export class WorkoutsController extends BaseController {
       .post('/:id/exercise', this.addExercise)
       .put('/:id', this.edit)
       .put('/:id/editExercise', this.editExercise)
-      .put('/:id/exercise', this.deleteExercise)
       .delete('/:id', this.delete)
+      .delete('/:id/exercise', this.deleteExercise)
   }
 
 
