@@ -193,6 +193,7 @@ export default {
   methods: {
     setWod(day) {
       if (this.$store.state.profile.schedule[day]) {
+        console.log(day);
         this.$store.commit("setWod", day);
         this.toggleWorkouts = false;
       } else {

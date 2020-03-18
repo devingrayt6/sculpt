@@ -1,37 +1,42 @@
 <template>
   <div>
     <div class="title-row col-12">
-      <h5>
+      <h3>
         <u contenteditable @blur="onEdit('title', exerciseData._id)">{{exerciseData.title}}</u>
-      </h5>
-      <p @click="deleteExercise(exerciseData)" class="deletebutton text-danger">X</p>
+      </h3>
+      <p
+        v-if="myWorkouts"
+        @click="deleteExerciseFromWorkout(exerciseData)"
+        class="deletebutton text-danger"
+      >X</p>
+      <p v-if="myExercises" @click="deleteExercise(exerciseData)" class="deletebutton text-danger">X</p>
     </div>
-    <p class="col-12" v-show="exerciseData.sets">
+    <h4 class="col-12" v-show="exerciseData.sets">
       Sets-
       <span contenteditable @blur="onEdit('sets', exerciseData._id)">{{exerciseData.sets}}</span>
-    </p>
-    <p class="col-12" v-show="exerciseData.reps">
+    </h4>
+    <h4 class="col-12" v-show="exerciseData.reps">
       Reps-
       <span contenteditable @blur="onEdit('reps', exerciseData._id)">{{exerciseData.reps}}</span>
-    </p>
-    <p class="col-12">
+    </h4>
+    <h4 class="col-12">
       Weight-
       <span
         contenteditable
         @blur="onEdit('weight', exerciseData._id)"
       >{{exerciseData.weight}}</span>
-    </p>
-    <p class="col-12" v-show="exerciseData.distance">
+    </h4>
+    <h4 class="col-12" v-show="exerciseData.distance">
       Distance-
       <span
         contenteditable
         @blur="onEdit('distance', exerciseData._id)"
       >{{exerciseData.distance}}</span>
-    </p>
-    <p class="col-12" v-show="exerciseData.time">
+    </h4>
+    <h4 class="col-12" v-show="exerciseData.time">
       Time-
       <span contenteditable @blur="onEdit('time', exerciseData._id)">{{exerciseData.time}}</span>
-    </p>
+    </h4>
   </div>
 </template>
 
@@ -39,9 +44,20 @@
 export default {
   name: "Exercise",
   props: ["exerciseData"],
+  computed: {
+    myWorkouts() {
+      return this.$route.path === "/myworkouts";
+    },
+    myExercises() {
+      return this.$route.path === "/myexercises";
+    }
+  },
   methods: {
     deleteExercise(data) {
       this.$store.dispatch("deleteExercise", data._id);
+    },
+    deleteExerciseFromWorkout(exerciseData) {
+      this.$store.dispatch("deleteExerciseFromWorkout", exerciseData);
     },
     onEdit(where, exerciseId) {
       let workoutId = this.$store.state.activeWorkout._id;

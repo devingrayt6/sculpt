@@ -51,6 +51,7 @@ export default {
         type: exercise
       };
       this.$store.dispatch("createWorkout", body);
+      this.$emit("clicked");
     }
   }
 };

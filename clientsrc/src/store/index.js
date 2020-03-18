@@ -225,9 +225,10 @@ export default new Vuex.Store({
     },
 
     async deleteExerciseFromWorkout({ commit }, data) {
-      let workoutId = this.state.activeWorkout._id
+      let workoutId = this.state.activeWorkout.id
+      console.log(workoutId)
       try {
-        let res = await api.put(`workouts/${workoutId}/exercise`, data)
+        let res = await api.delete(`workouts/${workoutId}/exercise`, data)
         commit('deleteExerciseFromWorkout', data)
       } catch (error) {
         console.error(error);

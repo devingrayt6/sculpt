@@ -50,10 +50,11 @@ class ProfileService {
     })
     let stats = profile.stats
     for (let prop in body) {
-      if(stats[prop]) {
-        if(stats[prop].length > 9){
-          stats[prop].shift()}
-      stats[prop].push(parseInt(body[prop]))
+      if (stats[prop]) {
+        if (stats[prop].length > 9) {
+          stats[prop].shift()
+        }
+        stats[prop].push(parseInt(body[prop]))
       }
     }
     await profile.save();
@@ -92,7 +93,6 @@ class ProfileService {
 ​    * @param {any} body Updates to apply to user object
 ​    */
   async updateProfile(user, body) {
-
     let update = sanitizeBody(body);
     console.log(body);
     let profile = await dbContext.Profile.findOneAndUpdate(

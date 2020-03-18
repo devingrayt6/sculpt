@@ -18,7 +18,7 @@
         Create New Workout
         <i class="fas fa-ban text-warning float-right" @click="workoutForm=false"></i>
       </h4>
-      <new-workout />
+      <new-workout v-on:clicked="toggleButton" />
     </div>
     <div class="row activeWorkout mt-4" v-if="!workoutForm">
       <workout-detail />
@@ -47,7 +47,11 @@ export default {
       return this.$store.state.workouts;
     }
   },
-  methods: {},
+  methods: {
+    toggleButton() {
+      this.workoutForm = false;
+    }
+  },
   components: {
     NewWorkout,
     Workout,
