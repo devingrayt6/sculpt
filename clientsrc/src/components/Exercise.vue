@@ -4,7 +4,12 @@
       <h3>
         <u contenteditable @blur="onEdit('title', exerciseData._id)">{{exerciseData.title}}</u>
       </h3>
-      <p @click="deleteExercise(exerciseData)" class="deletebutton text-danger">X</p>
+      <p
+        v-if="myWorkouts"
+        @click="deleteExerciseFromWorkout(exerciseData)"
+        class="deletebutton text-danger"
+      >X</p>
+      <p v-if="myExercises" @click="deleteExercise(exerciseData)" class="deletebutton text-danger">X</p>
     </div>
     <h4 class="col-12" v-show="exerciseData.sets">
       Sets-
@@ -39,9 +44,20 @@
 export default {
   name: "Exercise",
   props: ["exerciseData"],
+  computed: {
+    myWorkouts() {
+      return this.$route.path === "/myworkouts";
+    },
+    myExercises() {
+      return this.$route.path === "/myexercises";
+    }
+  },
   methods: {
     deleteExercise(data) {
       this.$store.dispatch("deleteExercise", data._id);
+    },
+    deleteExerciseFromWorkout(exerciseData) {
+      this.$store.dispatch("deleteExerciseFromWorkout", exerciseData);
     },
     onEdit(where, exerciseId) {
       let workoutId = this.$store.state.activeWorkout._id;

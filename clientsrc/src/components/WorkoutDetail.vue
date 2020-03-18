@@ -37,12 +37,12 @@
         v-if="!newExerciseForm"
         @click.prevent="newExerciseForm=true"
         class="btn btn-success m-3 h4"
-      >Build Workout</button>
+      >Add Exercises</button>
       <button
         v-if="newExerciseForm"
         @click.prevent="newExerciseForm=false"
-        class="btn btn-warning float-right m-3 h2"
-      >Cancel</button>
+        class="btn btn-success float-right m-3 h2"
+      >Done</button>
       <button @click="deleteWorkout" class="btn btn-danger m-3 h4">Delete Workout</button>
     </div>
   </div>
@@ -79,7 +79,6 @@ export default {
     },
     deleteExercise(data) {
       this.$store.dispatch("deleteExerciseFromWorkout", data);
-      this.exerciseData;
     },
     deleteWorkout() {
       let id = this.$store.state.activeWorkout._id;
