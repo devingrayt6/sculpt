@@ -25,7 +25,7 @@ const Workout = new Schema(
     type: { type: String },
     exerciseData: [ExerciseData],
     creatorEmail: { type: String, required: true },
-    day: [{ type: String, lowercase: true }]
+    day: [{ type: String, lowercase: true, default: "" }]
     // NOTE If you wish to add additional public properties for Workouts do so here
   },
   { timestamps: true, toJSON: { virtuals: true } })
