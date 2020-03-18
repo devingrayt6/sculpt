@@ -70,7 +70,7 @@ export default new Vuex.Store({
     },
     deleteExerciseFromWorkout(state, data) {
       // let exercise = state.activeWorkout.exerciseData.find(e => e._id = data.id)
-      let exercises = state.activeWorkout.exerciseData.filter(e => e._id != data._id)
+      let exercises = state.activeWorkout.exerciseData.filter(e => e._id != data.exerciseId)
       state.activeWorkout.exerciseData = exercises
     }
   },
@@ -224,12 +224,10 @@ export default new Vuex.Store({
       }
     },
 
-    async deleteExerciseFromWorkout({ commit }, data) {
-      let workoutId = this.state.activeWorkout.id
-      console.log(workoutId)
+    async deleteExerciseFromWorkout({ commit }, info) {
       try {
-        let res = await api.delete(`workouts/${workoutId}/exercise`, data)
-        commit('deleteExerciseFromWorkout', data)
+        let res = await api.delete(`workouts/${info.workoutId}/exercise/${info.exerciseId}`)
+        commit('deleteExerciseFromWorkout', info)
       } catch (error) {
         console.error(error);
       }

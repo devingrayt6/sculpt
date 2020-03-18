@@ -57,7 +57,11 @@ export default {
       this.$store.dispatch("deleteExercise", data._id);
     },
     deleteExerciseFromWorkout(exerciseData) {
-      this.$store.dispatch("deleteExerciseFromWorkout", exerciseData);
+      let data = {
+        workoutId: this.$store.state.activeWorkout.id,
+        exerciseId: exerciseData._id
+      };
+      this.$store.dispatch("deleteExerciseFromWorkout", data);
     },
     onEdit(where, exerciseId) {
       let workoutId = this.$store.state.activeWorkout._id;
