@@ -35,7 +35,7 @@
         </li>
       </ul>
     </div>
-    <completedWorkoutStatsModal v-if="exerciseData" />
+    <completedWorkoutStatsModal v-if="true" />
   </div>
 </template>
 
@@ -44,7 +44,6 @@ import completedWorkoutStatsModal from "../components/CompletedWorkoutStatsModal
 export default {
   name: "CurrentWorkout",
   mounted() {
-    console.log(this.$store.state.activeWorkout.exerciseData);
   },
   computed: {
     workout() {

@@ -6,9 +6,7 @@
           <p>Stats</p>
           <h2>GRAPH</h2>
           <!-- graph data comes in here -->
-          <p class="text-black">Top weight: {{chartData}} </p>
           <canvas id="myChart" width="400" height="400"></canvas>
-          <p></p>
         </div>
       </div>
     </div>
@@ -22,19 +20,26 @@ import Chart from "chart.js"
   // let ctx= document.getElementById('myChart')
 export default {
   name: 'Chart',
+  mounted() {
+    this.graphJS()
+  },
   data(){
     return {
+      activeStatData: this.$store.state.activeStat
     }
   },
-  mounted(){
+  watch: {activeStat: function(){this.graphJS()}},
+  methods: {
+    graphJS(){
+      debugger
     const ctx = document.getElementById('myChart')
     const myChart = new Chart(ctx,{
       type: "line",
       data: {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7', 'Day 8', 'Day 9', 'Day 10'],
     datasets: [{
-      label: '# of votes',
-      data: [12,19,3,4,7,11],
+      label: '# of times completed',
+      data: this.statistics,
       backgroundColor: [
         'rgba(255, 99, 132, 0.2)',
         'rgba(54, 162, 235, 0.2)',
@@ -59,14 +64,23 @@ export default {
         yAxes: [{
           ticks: {
             beginAtZero: true
-                }
+                },
+            scaleLabel: {
+              display: true,
+              labelString: 'Weight'
+            }
             }]
         }
     }
     });
   },
-  props: ["chartData"],
-  methods:{
+},
+  props: ["statistics"],
+  computed: {
+    activeStat() {
+      return this.$store.state.activeStat
+
+    }
   }
 }
 </script>
