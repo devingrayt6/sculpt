@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid">
-    <div class="row">
-      <h3 class="text-center my-3">{{dayOfWeek}} {{todaysDate}}</h3>
+    <div class="row text-center">
+      <h3 class="col-12 my-3">{{dayOfWeek}} {{todaysDate}}</h3>
     </div>
     <div class="row schedule-row p-3 bg-primary mx-3">
       <workout v-if="this.activeWorkout" :workoutData="activeWorkout" />
@@ -37,25 +37,25 @@
       </div>
     </div>
     <div class="calendar row">
-      <div class="text-center" @click="setActiveDay('sunday')">
+      <div class="text-center border border-dark" @click="setActiveDay('sunday')">
         <p>Sun</p>
       </div>
-      <div class="text-center" @click="setActiveDay('monday')">
+      <div class="text-center border border-dark" @click="setActiveDay('monday')">
         <p>Mon</p>
       </div>
-      <div class="text-center" @click="setActiveDay('tuesday')">
+      <div class="text-center border border-dark" @click="setActiveDay('tuesday')">
         <p>Tue</p>
       </div>
-      <div class="text-center" @click="setActiveDay('wednesday')">
+      <div class="text-center border border-dark" @click="setActiveDay('wednesday')">
         <p>Wed</p>
       </div>
-      <div class="text-center" @click="setActiveDay('thursday')">
+      <div class="text-center border border-dark" @click="setActiveDay('thursday')">
         <p>Thu</p>
       </div>
-      <div class="text-center" @click="setActiveDay('friday')">
+      <div class="text-center border border-dark" @click="setActiveDay('friday')">
         <p>Fri</p>
       </div>
-      <div class="text-center" @click="setActiveDay('saturday')">
+      <div class="text-center border border-dark" @click="setActiveDay('saturday')">
         <p>Sat</p>
       </div>
     </div>
@@ -110,11 +110,12 @@ export default {
   name: "Dashboard",
   mounted() {
     {
-      this.selectedDay = this.dayOfWeek.toLowerCase();
-      this.$store.dispatch("setActiveDay", this.selectedDay);
       this.$store.dispatch("getStats");
       this.$store.dispatch("getWorkouts");
       this.$store.dispatch("buildSchedule");
+      this.selectedDay = this.dayOfWeek.toLowerCase();
+      this.setActiveDay(this.selectedDay);
+      this.$store.dispatch("setActiveDay", this.selectedDay);
     }
   },
   computed: {

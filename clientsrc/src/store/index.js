@@ -113,12 +113,16 @@ export default new Vuex.Store({
     },
 
     getWorkoutOfDay({ commit }, day) {
-      if (this.state.workouts == []) {
+      if (this.state.workouts.length == 0) {
         commit("setActiveWorkout", {})
         return "no workouts"
       } else {
-        let workout = this.state.workouts.find(w => w.day.find(d => d == day))
-        commit("setActiveWorkout", workout)
+        let workout = this.state.workouts.find(w => w.day.find(d => d === day))
+        if (workout == undefined) {
+          commit('setActiveWorkout', {})
+        } else {
+          commit("setActiveWorkout", workout)
+        }
       }
     },
 
@@ -163,11 +167,11 @@ export default new Vuex.Store({
           let workout = res.data.find(w => w.day.find(d => d == day))
           if (workout) {
             commit("setSchedule", { workout, day })
-            dispatch("getWorkoutOfDay", day)
           } else {
             commit('setWorkouts', res.data)
           }
         }
+        dispatch("getWorkoutOfDay", this.state.activeDay)
       } catch (error) {
         console.error(error)
       }
@@ -177,7 +181,6 @@ export default new Vuex.Store({
       try {
         let day = this.state.activeDay
         let workout = update
-        debugger
         let res = await api.put(`workouts/${workout.id}/addDay`, { "day": day })
         commit('updateSchedule', { res, day })
         commit('setActiveWorkout', res.data)
@@ -186,8 +189,9 @@ export default new Vuex.Store({
       }
     },
 
-    setActiveDay({ commit }, day) {
+    setActiveDay({ commit, dispatch }, day) {
       commit('setActiveDay', day)
+      dispatch('getWorkoutOfDay', day)
     },
 
     async createWorkout({ commit }, workout) {

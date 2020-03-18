@@ -69,7 +69,7 @@ export class WorkoutsController extends BaseController {
 
   async addDay(req, res, next) {
     try {
-      let data = await workoutsService.edit(req.params.id, req.userInfo.email, req.body)
+      let data = await workoutsService.addDay(req.params.id, req.userInfo.email, req.body)
       return res.send(data)
     } catch (error) { next(error) }
   }
