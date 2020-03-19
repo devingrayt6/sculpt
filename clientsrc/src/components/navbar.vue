@@ -20,15 +20,6 @@
           data-target="#navbarText"
           class="nav-item"
           v-if="$auth.isAuthenticated"
-          :class="{ active: $route.name == 'Profile' }"
-        >
-          <router-link class="nav-link" :to="{ name: 'Profile' }">Profile</router-link>
-        </li>
-        <li
-          data-toggle="collapse"
-          data-target="#navbarText"
-          class="nav-item"
-          v-if="$auth.isAuthenticated"
           :class="{ active: $route.name == 'Dashboard' }"
         >
           <router-link class="nav-link" :to="{ name: 'Dashboard' }">Dashboard</router-link>
