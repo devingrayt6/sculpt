@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1>Coming Soon!</h1>
     <chart v-if="charts" :statistics="returnStat" />
     <!-- v-on:chartUpdate="toggleChart" -->
     <div class="col-12 stats-form">
@@ -15,40 +16,40 @@
       </select>
     </div>
     <div class="col-4 my-stats">
-      <canvas id="myChart" width="400" height="400" ></canvas>
+      <canvas id="myChart" width="400" height="400"></canvas>
     </div>
   </div>
 </template>
 
 <script>
-import Chart from "../components/Chart"
+import Chart from "../components/Chart";
 export default {
   name: "Stats",
   mounted() {
-    this.$store.dispatch("getStats")
+    this.$store.dispatch("getStats");
   },
-  
-  data(){
-    return {  
+
+  data() {
+    return {
       charts: false,
       exerciseChoice: this.$store.state.stats
-    }
+    };
   },
   computed: {
-    stats(){
-      return this.$store.state.stats
+    stats() {
+      return this.$store.state.stats;
     },
-    returnStat(){
-      return this.$store.state.activeStat
+    returnStat() {
+      return this.$store.state.activeStat;
     }
   },
   methods: {
     toggleStats(event) {
-      this.charts = false
-      let activeStat = event.target.value
-      this.$store.dispatch("setActiveStat", activeStat)
-      this.charts = true
-    },
+      this.charts = false;
+      let activeStat = event.target.value;
+      this.$store.dispatch("setActiveStat", activeStat);
+      this.charts = true;
+    }
   },
   components: {
     Chart
@@ -63,7 +64,6 @@ export default {
   background-color: rgba(59, 57, 57, 0.719);
   display: flex;
   flex-direction: column;
-  align-content: center
+  align-content: center;
 }
-
 </style>
