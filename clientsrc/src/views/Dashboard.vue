@@ -97,6 +97,7 @@
     <div class="row mt-3">
       <div class="stats col-12">
         <div class="text-center">
+          <h2 class="text-light">Feature coming soon...</h2>
           <h3 class="mt-3">STATS:</h3>
         </div>
         <div class="row">
