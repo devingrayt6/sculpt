@@ -55,6 +55,12 @@
   background-size: cover;
 }
 
+#rest{
+  background-image: url(./rest.jpg);
+  background-position: bottom left;
+  background-size: cover;
+}
+
 .background1{
   background-image: url(./background1.jpg);
   background-position: bottom;

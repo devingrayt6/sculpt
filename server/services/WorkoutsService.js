@@ -30,12 +30,25 @@ class WorkoutsService {
   }
 
   async addDay(id, userEmail, update) {
-    let data = await dbContext.Workout.findOne({ _id: id, creatorEmail: userEmail })
-    data.day.push(update.day)
-    await data.save()
-    if (!data) {
-      throw new BadRequest("Invalid ID or you do not own this board");
-    }
+    return await dbContext.Workout.findOneAndUpdate({ _id: id }, { $addToSet: { day: update.day } }, { new: true })
+    // let data = await dbContext.Workout.findOne({ _id: id, creatorEmail: userEmail })
+    // data.day.push(update.day)
+    // await data.save()
+    // if (!data) {
+    //   throw new BadRequest("Invalid ID or you do not own this board");
+    // }
+    // return data;
+  }
+
+  async removeDay(id, userEmail, update) {
+    let data = await dbContext.Workout.findOneAndUpdate({ _id: id }, { $pull: { day: update.day } }, { new: true })
+    // return data
+    // let data = await dbContext.Workout.findOne({ _id: id, creatorEmail: userEmail })
+    // data.day.pull(update.day)
+    // await data.save()
+    // if (!data) {
+    //   throw new BadRequest("Invalid ID or you do not own this board");
+    // }
     return data;
   }
 

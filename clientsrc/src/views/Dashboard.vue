@@ -10,8 +10,8 @@
         v-if="this.workouts.length>0"
         class="btn btn-secondary my-2"
       >
-        Set Schedule for
-        <span>{{this.selectedDay}}</span>
+        Change
+        <span>{{this.selectedDay}}</span>'s Workout
       </button>
       <router-link
         to="/myWorkouts"
@@ -27,7 +27,7 @@
           @change.prevent="updateSchedule"
           v-model="selected"
         >
-          <option value="rest day">Rest Day</option>
+          <option :value="this.restDayObj">Rest Day</option>
           <option
             v-for="workoutObj in workouts"
             :key="workoutObj._id"
@@ -37,29 +37,64 @@
       </div>
     </div>
     <div class="calendar row">
-      <div class="text-center border border-dark" @click="setActiveDay('sunday')">
-        <p>Sun</p>
+      <div class="text-center" @click="setActiveDay('sunday')">
+        <p class="m-0">Sun</p>
+        <i v-if="this.schedule.sunday" class="fas fa-dumbbell"></i>
+        <i
+          v-if="!this.schedule.sunday || this.schedule.sunday.title == 'Rest Day'"
+          class="fas fa-bed"
+        ></i>
       </div>
-      <div class="text-center border border-dark" @click="setActiveDay('monday')">
-        <p>Mon</p>
+      <div class="text-center" @click="setActiveDay('monday')">
+        <p class="m-0">Mon</p>
+        <i v-if="this.schedule.monday" class="fas fa-dumbbell"></i>
+        <i
+          v-if="!this.schedule.monday || this.schedule.monday.title == 'Rest Day'"
+          class="fas fa-bed"
+        ></i>
       </div>
-      <div class="text-center border border-dark" @click="setActiveDay('tuesday')">
-        <p>Tue</p>
+      <div class="text-center" @click="setActiveDay('tuesday')">
+        <p class="m-0">Tue</p>
+        <i v-if="this.schedule.tuesday" class="fas fa-dumbbell"></i>
+        <i
+          v-if="!this.schedule.tuesday || this.schedule.tuesday.title == 'Rest Day'"
+          class="fas fa-bed"
+        ></i>
       </div>
-      <div class="text-center border border-dark" @click="setActiveDay('wednesday')">
-        <p>Wed</p>
+      <div class="text-center" @click="setActiveDay('wednesday')">
+        <p class="m-0">Wed</p>
+        <i v-if="this.schedule.wednesday" class="fas fa-dumbbell"></i>
+        <i
+          v-if="!this.schedule.wednesday || this.schedule.wednesday.title == 'Rest Day'"
+          class="fas fa-bed"
+        ></i>
       </div>
-      <div class="text-center border border-dark" @click="setActiveDay('thursday')">
-        <p>Thu</p>
+      <div class="text-center" @click="setActiveDay('thursday')">
+        <p class="m-0">Thu</p>
+        <i v-if="this.schedule.thursday" class="fas fa-dumbbell"></i>
+        <i
+          v-if="!this.schedule.thursday || this.schedule.thursday.title == 'Rest Day'"
+          class="fas fa-bed"
+        ></i>
       </div>
-      <div class="text-center border border-dark" @click="setActiveDay('friday')">
-        <p>Fri</p>
+      <div class="text-center" @click="setActiveDay('friday')">
+        <p class="m-0">Fri</p>
+        <i v-if="this.schedule.friday" class="fas fa-dumbbell"></i>
+        <i
+          v-if="!this.schedule.friday || this.schedule.friday.title == 'Rest Day'"
+          class="fas fa-bed"
+        ></i>
       </div>
-      <div class="text-center border border-dark" @click="setActiveDay('saturday')">
-        <p>Sat</p>
+      <div class="text-center" @click="setActiveDay('saturday')">
+        <p class="m-0">Sat</p>
+        <i v-if="this.schedule.saturday" class="fas fa-dumbbell"></i>
+        <i
+          v-if="!this.schedule.saturday || this.schedule.saturday.title == 'Rest Day'"
+          class="fas fa-bed"
+        ></i>
       </div>
     </div>
-    <div class="row">
+    <div class="row mt-3">
       <div class="stats col-12">
         <div class="text-center">
           <h3 class="mt-3">STATS:</h3>
@@ -115,7 +150,6 @@ export default {
       this.$store.dispatch("buildSchedule");
       this.selectedDay = this.dayOfWeek.toLowerCase();
       this.setActiveDay(this.selectedDay);
-      this.$store.dispatch("setActiveDay", this.selectedDay);
     }
   },
   computed: {
@@ -134,10 +168,9 @@ export default {
       this.selectedDay = day;
       this.$store.dispatch("setActiveDay", this.selectedDay);
       if (this.workouts.length == 0) {
-        let workout = "no workouts created yet";
-        console.log(workout);
+        this.$store.dispatch("setActiveWorkout", this.restDayObj);
       } else if (!this.schedule[day]) {
-        this.$store.dispatch("resetActiveWorkout", {});
+        this.$store.dispatch("setActiveWorkout", this.restDayObj);
         this.toggleWorkouts = true;
         console.log("toggle");
       } else {
@@ -165,7 +198,11 @@ export default {
       dayOfWeek: `${weekDays[new Date().getDay()]}`,
       toggleWorkouts: false,
       selectedDay: "",
-      selected: {}
+      selected: {},
+      restDayObj: {
+        title: "Rest Day",
+        type: "rest"
+      }
     };
   },
   components: {
@@ -180,25 +217,6 @@ export default {
   flex-direction: row;
   justify-content: space-evenly;
   margin-top: 2.5rem;
-}
-/*
-.calendar p {
-  color: rgb(124, 121, 121);
-  font-size: 14px;
-}
-.calendar div {
-  width: 1rem;
-}
-.icons {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-}
-.icons i {
-  font-size: 14px;
-}
-.icons div {
-  width: 1rem;
 }
 .stats {
   bottom: 0;
@@ -217,21 +235,7 @@ export default {
   font-size: 18px;
   margin-top: 0.75rem;
   margin-bottom: 0.75rem;
-} */
-/* .toggled-workouts {
-  height: 15rem;
-  overflow-y: auto;
-} */
-/* .today-workout {
-  width: 100%;
-  margin: auto auto;
-} */
-/* .change-workout {
-  justify-self: center;
-  width: 45%;
-  height: 15%;
-  padding: 1px;
-} */
+}
 .schedule-row {
   display: flex;
   flex-direction: row;
