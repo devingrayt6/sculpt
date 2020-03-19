@@ -43,14 +43,13 @@
 import completedWorkoutStatsModal from "../components/CompletedWorkoutStatsModal";
 export default {
   name: "CurrentWorkout",
-  mounted() {
-  },
+  mounted() {},
   computed: {
     workout() {
-      return this.$store.state.wod;
+      return this.$store.state.activeWorkout;
     },
     exerciseData() {
-      return this.$store.state.wod.exerciseData;
+      return this.$store.state.activeWorkout.exerciseData;
     }
   },
   methods: {},
