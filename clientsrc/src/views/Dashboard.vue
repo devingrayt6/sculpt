@@ -4,7 +4,7 @@
       <h3 class="col-12 my-3">{{dayOfWeek}} {{todaysDate}}</h3>
     </div>
     <div class="row schedule-row p-3 bg-primary mx-3">
-      <workout v-if="this.activeWorkout" :workoutData="activeWorkout" />
+      <workout @clicked="changeView" v-if="this.activeWorkout" :workoutData="activeWorkout" />
       <button
         @click="toggleWorkouts = !toggleWorkouts"
         v-if="this.workouts.length>0"
@@ -184,6 +184,15 @@ export default {
       let workout = this.selected;
       this.$store.dispatch("updateSchedule", workout);
       this.toggleWorkouts = false;
+    },
+    changeView() {
+      if (this.activeWorkout.title != "Rest Day") {
+        if (this.selectedDay === this.dayOfWeek.toLowerCase()) {
+          this.$router.push({ name: "CurrentWorkout" });
+        } else {
+          this.$router.push({ name: "MyWorkouts" });
+        }
+      }
     }
   },
   data() {

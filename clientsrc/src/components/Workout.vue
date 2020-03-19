@@ -15,6 +15,7 @@ export default {
   methods: {
     setActiveWorkout() {
       this.$store.dispatch("setActiveWorkout", this.workoutData);
+      this.$emit("clicked");
     }
   }
 };
