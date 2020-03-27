@@ -1,3 +1,0 @@
-export const domain = "codeworks-20.auth0.com";
-export const audience = "https://sculpt.com";
-export const clientId = "n6DHPV31JkDy2WamjGE1GBIHcKraCmYq";
