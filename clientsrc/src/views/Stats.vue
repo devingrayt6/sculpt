@@ -2,7 +2,6 @@
   <div>
     <h1>Coming Soon!</h1>
     <chart v-if="charts" :statistics="returnStat" />
-    <!-- v-on:chartUpdate="toggleChart" -->
     <div class="col-12 stats-form">
       <label for="statsPage">Type</label>
       <select class="form-control" id="statsPage" @change="toggleStats($event)">
@@ -28,8 +27,8 @@ export default {
   mounted() {
     this.$store.dispatch("getStats");
   },
-
-  data() {
+  
+  data(){
     return {
       charts: false,
       exerciseChoice: this.$store.state.stats
