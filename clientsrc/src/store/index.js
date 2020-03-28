@@ -23,7 +23,7 @@ export default new Vuex.Store({
     activeWorkout: { exercises: [] },
     workouts: [],
     exercises: [],
-    stats: [],
+    stats: {},
     activeStat: {},
     wod: {},
     activeDay: "",
@@ -31,8 +31,7 @@ export default new Vuex.Store({
   },
   mutations: {
     setActiveStat(state, statObj) {
-      let activeStat = state.stats[statObj]
-      state.activeStat = activeStat
+      state.activeStat = state.stats[statObj]
     },
     setProfile(state, profile) {
       state.profile = profile;
@@ -105,8 +104,32 @@ export default new Vuex.Store({
     },
     async getStats({ commit }) {
       try {
-        let res = await api.get("profile")
-        commit("setStats", res.data.stats)
+        let res = await api.get("stats")
+        if(res.data.length == 0){
+          let stats = {
+            "bench": 0,
+            "deadLift": 0,
+            "pullUp": 0,
+            "squat": 0,
+            "sitUp": 0,
+            "pushUp": 0,
+            "time": 0
+          }
+          await api.post("stats", stats)
+          let newStats = await api.get("stats")
+          commit("setStats", newStats.data)
+        }
+        commit("setStats", res.data)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    async saveStats({ commit }, completedStats) {
+      try {
+        let stats = await api.get("stats")
+        commit("setStats", stats.data)
+        let res = await api.put(`stats/${stats.data._id}`, completedStats)
+        commit("setStats", res.data)
       } catch (error) {
         console.error(error)
       }
@@ -126,14 +149,6 @@ export default new Vuex.Store({
       }
     },
 
-    async saveStats({ commit }, completedStats) {
-      let profileId = this.state.profile._id
-      try {
-        let res = await api.post(`profile/${profileId}/stats`, completedStats)
-      } catch (error) {
-        console.error(error)
-      }
-    },
 
     async getWorkouts({ commit }) {
       try {
@@ -254,7 +269,7 @@ export default new Vuex.Store({
         console.error(error)
       }
     },
-    async editExercise({ commit }, data) {
+    async editExercise({ commit }, data) {                     
       try {
         let res = await api.put(`exercises/${data.exerciseId}`, data.update)
       } catch (error) {

@@ -49,7 +49,13 @@ class ProfileService {
       email: { $in: userInfo.email }
     })
     let stats = profile.stats
+    let object = Object.keys(stats).length
     for (let prop in body) {
+      for (let i = 0; i < stats.length; i++){
+        if(stats[prop] == prop){
+          console.log(stats[prop])
+        }
+      }
       if (stats[prop]) {
         if (stats[prop].length > 9) {
           stats[prop].shift()
@@ -57,6 +63,7 @@ class ProfileService {
         stats[prop].push(parseInt(body[prop]))
       }
     }
+    profile.markModified("stats")
     await profile.save();
     return profile
   }

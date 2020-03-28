@@ -31,7 +31,6 @@ export default {
   watch: {activeStat: function(){this.graphJS()}},
   methods: {
     graphJS(){
-      debugger
     const ctx = document.getElementById('myChart')
     const myChart = new Chart(ctx,{
       type: "line",
