@@ -140,7 +140,10 @@ export default new Vuex.Store({
       } else {
         let workout = this.state.workouts.find(w => w.day.find(d => d === day))
         if (workout == undefined) {
-          commit('setActiveWorkout', {})
+          commit('setActiveWorkout', {
+            title: "Rest Day",
+            type: "rest"
+          })
         } else {
           commit("setActiveWorkout", workout)
         }
@@ -191,14 +194,26 @@ export default new Vuex.Store({
     },
 
     async updateSchedule({ commit }, update) {
-      try {
-        let day = this.state.activeDay
-        let workout = update
-        let res = await api.put(`workouts/${workout.id}/addDay`, { "day": day })
-        commit('updateSchedule', { res, day })
-        commit('setActiveWorkout', res.data)
-      } catch (error) {
-        console.error(error)
+      let workout = update
+      let day = this.state.activeDay
+      let changeWorkout = this.state.schedule[day]
+      if (workout.title === "Rest Day") {
+        let res = { data: workout }
+        try {
+          let updatedWorkout = await api.put(`workouts/${changeWorkout.id}/removeDay`, { "day": day })
+          commit('updateSchedule', { res, day })
+          commit('setActiveWorkout', workout)
+        } catch (error) {
+          console.error(error)
+        }
+      } else {
+        try {
+          let res = await api.put(`workouts/${workout.id}/addDay`, { "day": day })
+          commit('updateSchedule', { res, day })
+          commit('setActiveWorkout', res.data)
+        } catch (error) {
+          console.error(error)
+        }
       }
     },
 
@@ -217,12 +232,16 @@ export default new Vuex.Store({
     },
 
     async setActiveWorkout({ commit }, workout) {
-      try {
-        let res = await api.get(`workouts/${workout.id}`)
+      if (workout.title === "Rest Day") {
+        let res = { data: workout }
         commit('setActiveWorkout', res.data)
-      } catch (error) {
-        console.error(error);
-
+      } else {
+        try {
+          let res = await api.get(`workouts/${workout.id}`)
+          commit('setActiveWorkout', res.data)
+        } catch (error) {
+          console.error(error);
+        }
       }
     },
 
