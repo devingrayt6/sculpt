@@ -4,9 +4,6 @@ const ObjId = mongoose.SchemaTypes.ObjectId
 
 const Stats = new Schema(
   {
-    // type: {type: String}
-    // value: {type: Number}
-    // profileId: {type: ObjId, ref: "Profile", required: true}
     bench: [{type: Number, default: 0}],
     deadLift: [{type: Number, default: 0}],
     pullUp: [{type: Number, default: 0}],

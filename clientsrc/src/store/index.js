@@ -3,7 +3,6 @@ import Vuex, { Store } from "vuex";
 import Axios from "axios";
 import router from "../router";
 import { STATES } from "mongoose";
-import Exercise from "../../../server/models/Exercises";
 
 Vue.use(Vuex);
 
@@ -76,7 +75,6 @@ export default new Vuex.Store({
       state.activeWorkout.exerciseData.push(data)
     },
     deleteExerciseFromWorkout(state, data) {
-      // let exercise = state.activeWorkout.exerciseData.find(e => e._id = data.id)
       let exercises = state.activeWorkout.exerciseData.filter(e => e._id != data.exerciseId)
       state.activeWorkout.exerciseData = exercises
     }
